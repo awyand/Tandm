@@ -45,14 +45,14 @@ Tactical Network Device Manager (Tandm) is a mission-centric Mobile Device Manag
 * Mapbox (mapping)
 
 ## Architecture
-![Architecture Diagram](https://github.com/awyand/beautification-app/blob/master/readme-images/architecture-diagram.png)
+![Architecture Diagram](https://github.com/awyand/Tandm/blob/master/README/architecture.png)
 
 ## Data Flow
-![Data Flow](https://github.com/awyand/beautification-app/blob/master/readme-images/architecture-diagram.png)
+![Data Flow](https://github.com/awyand/Tandm/blob/master/README/data_flow.png)
 
 ## Wireframe
-![Login Page](https://github.com/awyand/beautification-app/blob/master/readme-images/architecture-diagram.png)
-![Missions Screens](https://github.com/awyand/beautification-app/blob/master/readme-images/architecture-diagram.png)
+![Login Page](https://github.com/awyand/Tandm/blob/master/README/wireframe_1.png)
+![Missions Screens](https://github.com/awyand/Tandm/blob/master/README/wireframe_2.png)
 
 ## Scope
 ### MVP
