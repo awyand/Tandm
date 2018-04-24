@@ -1,8 +1,12 @@
 import React from 'react';
 import './Help.css';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 const Help = () => (
-  <h1>Help</h1>
+  <Card className="container">
+    <CardTitle title="Help" />
+    {/* insert help */}
+  </Card>
 )
 
 export default Help;

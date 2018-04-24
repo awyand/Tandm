@@ -47315,13 +47315,15 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(344);
 
+var _Card = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ActiveMissions = function ActiveMissions() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Active'
+    _Card.Card,
+    { className: 'container' },
+    _react2.default.createElement(_Card.CardTitle, { title: 'Active Missions' })
   );
 };
 
@@ -47366,13 +47368,15 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(345);
 
+var _Card = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Contact = function Contact() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Contact'
+    _Card.Card,
+    { className: 'container' },
+    _react2.default.createElement(_Card.CardTitle, { title: 'Contact' })
   );
 };
 
@@ -47417,13 +47421,15 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(346);
 
+var _Card = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Help = function Help() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Help'
+    _Card.Card,
+    { className: 'container' },
+    _react2.default.createElement(_Card.CardTitle, { title: 'Help' })
   );
 };
 
@@ -47468,13 +47474,15 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(347);
 
+var _Card = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Inventory = function Inventory() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Inventory'
+    _Card.Card,
+    { className: 'container' },
+    _react2.default.createElement(_Card.CardTitle, { title: 'Inventory' })
   );
 };
 
@@ -47519,13 +47527,15 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(348);
 
+var _Card = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Mapper = function Mapper() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Map'
+    _Card.Card,
+    { className: 'container' },
+    _react2.default.createElement(_Card.CardTitle, { title: 'Active Missions Map' })
   );
 };
 
@@ -47583,6 +47593,8 @@ __webpack_require__(349);
 var _API = __webpack_require__(386);
 
 var _API2 = _interopRequireDefault(_API);
+
+var _Card = __webpack_require__(66);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47649,13 +47661,9 @@ var NewMission = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'New Mission'
-        ),
+        _Card.Card,
+        { className: 'container' },
+        _react2.default.createElement(_Card.CardTitle, { title: 'New Mission' }),
         _react2.default.createElement(
           _FloatingActionButton2.default,
           { onClick: this.handleAddMission },
@@ -47709,13 +47717,15 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(350);
 
+var _Card = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Reports = function Reports() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Reports'
+    _Card.Card,
+    { className: 'container' },
+    _react2.default.createElement(_Card.CardTitle, { title: 'Active Missions Reports' })
   );
 };
 
@@ -47760,13 +47770,15 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(351);
 
+var _Card = __webpack_require__(66);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SavedMissions = function SavedMissions() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'Saved'
+    _Card.Card,
+    { className: 'container' },
+    _react2.default.createElement(_Card.CardTitle, { title: 'Saved Missions' })
   );
 };
 

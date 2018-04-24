@@ -3,6 +3,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import './NewMission.css';
 import API from '../../../utils/API.js';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 export default class NewMission extends React.Component {
   constructor(props) {
@@ -64,12 +65,14 @@ export default class NewMission extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>New Mission</h1>
+
+      <Card className="container">
+        <CardTitle title="New Mission" />
+        {/* form goes here */}
         <FloatingActionButton onClick={this.handleAddMission}>
             <ContentAdd />
           </FloatingActionButton>
-      </div>
+      </Card>
     )
   }
 }

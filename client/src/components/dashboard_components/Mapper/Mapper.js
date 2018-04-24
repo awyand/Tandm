@@ -1,8 +1,12 @@
 import React from 'react';
 import './Mapper.css';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 const Mapper = () => (
-  <h1>Map</h1>
+  <Card className="container">
+    <CardTitle title="Active Missions Map" />
+    {/* this will be a full blown component populated by active missions */}
+  </Card>
 )
 
 export default Mapper;
