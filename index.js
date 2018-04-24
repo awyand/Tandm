@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./config');
+const path = require('path');
+
+const router = new express.Router();
 
 // connect to the database and load models
 require('./server/models').connect(config.dbUri);
@@ -31,10 +34,15 @@ const apiRoutes = require('./server/routes/api');
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 
-// Set Port, hosting services will look for process.env.PORT
+// redirect anything not defined in above routes to homepage
+app.use((req,res) => {
+  res.redirect('/');
+})
+
+// set port
 app.set('port', (process.env.PORT || 3000));
 
 // start the server
 app.listen(app.get('port'), () => {
-  console.log(`Server is running on port ${app.get('port')}`);
+  console.log(`Tandm running on port ${app.get('port')}`);
 });

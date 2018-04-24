@@ -1,0 +1,60 @@
+{
+  "apps": [
+    {
+      "name": "Mail",
+      "icon": ""
+    },
+    {
+      "name": "Maps",
+      "icon": ""
+    },
+    {
+      "name": "Browser",
+      "icon": ""
+    },
+    {
+      "name": "Camera",
+      "icon": ""
+    },
+    {
+      "name": "Signal",
+      "icon": ""
+    },
+    {
+      "name": "Weather",
+      "icon": ""
+    },
+    {
+      "name": "First Aid",
+      "icon": ""
+    },
+    {
+      "name": "MilGPS",
+      "icon": ""
+    },
+    {
+      "name": "Tactical NAV",
+      "icon": ""
+    },
+    {
+      "name": "Evidence Cam",
+      "icon": ""
+    },
+    {
+      "name": "Cargo Decoder",
+      "icon": ""
+    },
+    {
+      "name": "Radio",
+      "icon": ""
+    }
+  ],
+  "osVersions": [
+    "Android P",
+    "Oreo",
+    "Nougat",
+    "Marshmallow",
+    "Lollipop",
+    "KitKat"
+  ]
+}

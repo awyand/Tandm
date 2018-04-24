@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+// import injectTapEventPlugin from 'react-tap-event-plugin';
+import initFastClick from "react-fastclick";
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -19,7 +20,7 @@ import DashboardPage from './containers/DashboardPage.jsx';
 import Auth from './modules/Auth';
 
 // remove tap delay, essential for MaterialUI to work properly
-injectTapEventPlugin();
+initFastClick();
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (

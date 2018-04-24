@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Auth from '../modules/Auth';
 import Dashboard from '../components/Dashboard.jsx';
-
+import Sidebar from '../components/Sidebar.jsx';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 class DashboardPage extends React.Component {
 
@@ -12,7 +13,6 @@ class DashboardPage extends React.Component {
     super(props);
 
     this.state = {
-      secretData: '',
       user: {}
     };
   }
@@ -30,7 +30,6 @@ class DashboardPage extends React.Component {
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
         this.setState({
-          secretData: xhr.response.message,
           user: xhr.response.user
         });
       }
@@ -38,11 +37,22 @@ class DashboardPage extends React.Component {
     xhr.send();
   }
 
+
+
   /**
    * Render the component.
    */
   render() {
-    return (<Dashboard secretData={this.state.secretData} user={this.state.user} />);
+    return (
+      <div>
+        <Router>
+          <div>
+          <Sidebar />
+          <Dashboard user={this.state.user} />
+        </div>
+        </Router>
+      </div>
+    );
   }
 
 }

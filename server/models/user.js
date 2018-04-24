@@ -1,14 +1,48 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+// const ContainerSchema = new mongoose.Schema({
+//   name: String,
+//   networks: Array,
+//   apps: Array
+// });
+//
+// const PhoneSchema = new mongoose.Schema({
+//   osVersion: String,
+//   containers: [ContainerSchema],
+//   name: {
+//     type: String,
+//     index: { unique: true }
+//   }
+// });
+//
+// const MissionSchema = new mongoose.Schema({
+//   dateAdded: {
+//     type: Date,
+//     default: Date.now()
+//   },
+//   name: {
+//     type: String,
+//     index: { unique: true }
+//   },
+//   phones: [PhoneSchema]
+// });
+
 // define the User model schema
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     index: { unique: true }
   },
-  password: String
+  password: String,
+  // missions: [MissionSchema]
 });
+
+
+
+
+
+
 
 
 /**

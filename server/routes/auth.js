@@ -37,13 +37,7 @@ function validateSignupForm(payload) {
   };
 }
 
-/**
- * Validate the login form
- *
- * @param {object} payload - the HTTP body message
- * @returns {object} The result of validation. Object contains a boolean validation result,
- *                   errors tips, and a global message for the whole form.
- */
+
 function validateLoginForm(payload) {
   const errors = {};
   let isFormValid = true;
@@ -133,7 +127,6 @@ router.post('/login', (req, res, next) => {
         message: 'Could not process the form.'
       });
     }
-
 
     return res.json({
       success: true,
