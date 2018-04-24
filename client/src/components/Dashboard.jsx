@@ -11,18 +11,14 @@ import Inventory from './dashboard_components/Inventory';
 import Mapper from './dashboard_components/Mapper';
 import Reports from './dashboard_components/Reports';
 import SavedMissions from './dashboard_components/SavedMissions';
+import Welcome from './dashboard_components/Welcome';
 
 
 
 const Dashboard = ({ user }) => (
-  <Card className="container">
-    <CardTitle
-      title="Dashboard"
-    />
-  {user && <CardText style={{ fontSize: '16px', color: 'green' }}>Welcome <strong>{user.username}</strong>!</CardText>}
 
-    <div className='test'>
-      <Route exact path='/dashboard' component={null}/>
+    <Card className='container'>
+      <Route exact path='/dashboard' render={() => <Welcome user={user} />} />
       <Route exact path='/new' render={() => <NewMission userId={user._id} />} />
       <Route exact path='/saved' component={SavedMissions} />
       <Route exact path='/active' component={ActiveMissions} />
@@ -31,9 +27,7 @@ const Dashboard = ({ user }) => (
       <Route exact path='/inventory' component={Inventory} />
       <Route exact path='/contact' component={Contact} />
       <Route exact path='/help' component={Help} />
-    </div>
-
-  </Card>
+    </Card>
 
 );
 
