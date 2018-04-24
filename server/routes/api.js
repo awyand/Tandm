@@ -10,31 +10,21 @@ router.get('/dashboard', (req, res) => {
   });
 });
 
+// handle posts to api/:id
 router.post('/:id', (req, res) => {
-  // console.log(JSON.stringify(req.body.missionData, null, 2));
-  // console.log(req.params.id);
-  // console.log(req.body.missionData);
-  console.log(`Updating User ID: ${req.params.id}`);
-  console.log(`Updating with following Mission Data:`);
-  console.log(req.body.missionData);
+  // Find user by ID and push new mission data to user's mission array
+  // Pass new: true option so that Mongoose response includes new mission
+  User.findOneAndUpdate({_id: req.params.id}, {$push: {missions: req.body.missionData}}, {new: true}, function(err, user) {
+    // error handling
+    if (err) {
+      return res.status(500).end();
+    }
 
-  User.findOneAndUpdate({_id: req.params.id}, {$push: {missions: req.body.missionData}}, function(err, mission) {
-    console.log(mission);
+    // send updated array of missions
+    res.send({missions: user.missions});
   });
 
 
-  // User.findOneAndUpdate(
-  //   { id: req.params.id },
-  //   { $push: { 'missions': req.body.missionData } }
-  // ), function(error, success) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log(success);
-  //   }
-  // }
-
-  res.send('received');
 });
 
 

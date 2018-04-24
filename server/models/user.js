@@ -10,10 +10,7 @@ const ContainerSchema = new mongoose.Schema({
 const PhoneSchema = new mongoose.Schema({
   osVersion: String,
   containers: [ContainerSchema],
-  name: {
-    type: String,
-    index: { unique: true }
-  }
+  name: String
 });
 
 const MissionSchema = new mongoose.Schema({
@@ -21,10 +18,7 @@ const MissionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now()
   },
-  name: {
-    type: String,
-    index: { unique: true }
-  },
+  name: String,
   phones: [PhoneSchema]
 });
 
