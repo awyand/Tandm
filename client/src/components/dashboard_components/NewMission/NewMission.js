@@ -1,13 +1,23 @@
 import React from 'react';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import PropTypes from 'prop-types';
+
+// Project Files
 import './NewMission.css';
 import API from '../../../utils/API.js';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
-import PropTypes from 'prop-types';
+
+// Project Components
+import PhoneMain from '../PhoneMain'
+
+// Material-UI Components
 import TextField from 'material-ui-next/TextField';
 import Checkbox from 'material-ui-next/Checkbox';
-import { FormGroup, FormControlLabel } from 'material-ui-next/Form';
+import { FormControl, FormGroup, FormControlLabel } from 'material-ui-next/Form';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import Input, { InputLabel } from 'material-ui-next/Input';
+import Select from 'material-ui-next/Select';
+import { MenuItem } from 'material-ui-next/Menu';
 
 export default class NewMission extends React.Component {
   constructor(props) {
@@ -59,6 +69,8 @@ export default class NewMission extends React.Component {
     checkedU: false,
     checkedS: false,
     checkedTS: false,
+    numPhones: 0,
+    osVersion: '',
     name: '',
     phones: [
       {
@@ -83,7 +95,12 @@ export default class NewMission extends React.Component {
 
   handleCheckChange = name => event => {
     this.setState({ [name]: event.target.checked });
+  }
 
+  handleNumPhonesChange = event => {
+    this.setState({
+      numPhones: event.target.value
+    })
   }
 
   handleAddMission = event => {
@@ -104,59 +121,52 @@ export default class NewMission extends React.Component {
 
     const { classes } = this.props;
 
+    let phoneBoxes = [];
+    for (let i = 1; i < this.state.numPhones + 1; i++) {
+      phoneBoxes.push(i);
+    }
+
+
+    let phoneBoxList = phoneBoxes.map(phoneBox => (
+      <PhoneMain key={`Phone-${phoneBox}`} name={`Phone ${phoneBox}`}/>
+    ));
+
+
     return (
 
 
       <Card className="container">
         <CardTitle title="New Mission" />
-        {/* form goes here */}
-        {/* <form noValidate autoComplete='off'> */}
+
           <TextField
             id='missionName'
             label='Mission Name'
             value={this.state.name}
             onChange={this.handleNameChange}
-            placeholder='Aaron'
+            placeholder='Op Midnight'
           />
 
-        {/* </form> */}
-        <FormGroup row>
-          <FormControlLabel control={
-            <Checkbox
-            checked={this.state.checkedU}
-            onChange={this.handleCheckChange('checkedU')}
-            value="checkedU"
-            />
-          }
-          label='U'
-          />
+          <FormControl>
+            <InputLabel htmlFor="numPhones">Phones</InputLabel>
+            <Select
+              value={this.state.numPhones}
+              onChange={this.handleNumPhonesChange}
+              inputProps={{
+                name: 'numPhones',
+                id: 'numPhones',
+              }}
+            >
+              <MenuItem value={0}>0</MenuItem>
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+            </Select>
+          </FormControl>
 
-          <FormControlLabel control={
-            <Checkbox
-            checked={this.state.checkedS}
-            onChange={this.handleCheckChange('checkedS')}
-            value="checkedS"
-            />
-          }
-          label='S'
-          />
+        {phoneBoxList}
 
-          <FormControlLabel control={
-            <Checkbox
-            checked={this.state.checkedTS}
-            onChange={this.handleCheckChange('checkedTS')}
-            value="checkedTS"
-            />
-          }
-          label='TS'
-          />
-        </FormGroup>
-
-        {this.state.checkedU && <p>Unclassified</p>}
-        {this.state.checkedS && <p>Secret</p>}
-        {this.state.checkedTS && <p>Top Secret</p>}
-
-        <p>Add Mission</p>
         <FloatingActionButton onClick={this.handleAddMission}>
             <ContentAdd />
           </FloatingActionButton>
