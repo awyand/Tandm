@@ -7,6 +7,7 @@ import Input, { InputLabel } from 'material-ui-next/Input';
 import Select from 'material-ui-next/Select';
 import { MenuItem } from 'material-ui-next/Menu';
 import TextField from 'material-ui-next/TextField';
+import Checkbox from 'material-ui-next/Checkbox';
 
 // Project Components
 import PhoneContainer from '../PhoneContainer'
@@ -33,6 +34,9 @@ export default class PhoneMain extends React.Component {
   state = {
     name: this.props.name,
     osVersion: '',
+    checkedU: false,
+    checkedS: false,
+    checkedTS: false,
     containers: []
   }
 
@@ -46,6 +50,10 @@ export default class PhoneMain extends React.Component {
     this.setState({
       osVersion: event.target.value
     })
+  }
+
+  handleCheckChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   }
 
   render() {
@@ -117,8 +125,8 @@ export default class PhoneMain extends React.Component {
       </FormGroup>
 
       {this.state.checkedU && <PhoneContainer name='Unclassified' />}
-      {this.state.checkedS && <p>Secret</p>}
-      {this.state.checkedTS && <p>Top Secret</p>}
+      {this.state.checkedS && <PhoneContainer name='Secret' />}
+      {this.state.checkedTS && <PhoneContainer name='Top Secret' />}
 
 
     </Card>

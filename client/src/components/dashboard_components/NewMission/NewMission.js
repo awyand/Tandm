@@ -10,7 +10,7 @@ import PhoneMain from '../PhoneMain'
 
 // Material-UI Components
 import TextField from 'material-ui-next/TextField';
-import Checkbox from 'material-ui-next/Checkbox';
+
 import { FormControl, FormGroup, FormControlLabel } from 'material-ui-next/Form';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -18,6 +18,12 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Input, { InputLabel } from 'material-ui-next/Input';
 import Select from 'material-ui-next/Select';
 import { MenuItem } from 'material-ui-next/Menu';
+
+const styles = {
+  addMissionBtn: {
+    margin: '10px auto'
+  }
+}
 
 export default class NewMission extends React.Component {
   constructor(props) {
@@ -66,9 +72,6 @@ export default class NewMission extends React.Component {
   // }
 
   state = {
-    checkedU: false,
-    checkedS: false,
-    checkedTS: false,
     numPhones: 0,
     osVersion: '',
     name: '',
@@ -91,10 +94,6 @@ export default class NewMission extends React.Component {
     this.setState({
       name: event.target.value
     });
-  }
-
-  handleCheckChange = name => event => {
-    this.setState({ [name]: event.target.checked });
   }
 
   handleNumPhonesChange = event => {
@@ -167,7 +166,9 @@ export default class NewMission extends React.Component {
 
         {phoneBoxList}
 
-        <FloatingActionButton onClick={this.handleAddMission}>
+        <br />
+
+        <FloatingActionButton onClick={this.handleAddMission} style={styles.addMissionBtn}>
             <ContentAdd />
           </FloatingActionButton>
       </Card>
