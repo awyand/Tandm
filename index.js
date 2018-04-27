@@ -7,7 +7,8 @@ const path = require('path');
 const router = new express.Router();
 
 // connect to the database and load models
-require('./server/models').connect(config.dbUri);
+const dbUri = process.env.MONGODB_URI || config.dbUri;
+require('./server/models').connect(dbUri);
 
 const app = express();
 // tell the app to look for static files in these directories
