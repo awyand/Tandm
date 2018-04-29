@@ -19,7 +19,7 @@ export default class Sidebar extends React.Component {
         <Drawer open={this.state.open}>
           <MenuItem><Link to='/dashboard'>Dashboard</Link></MenuItem>
           <MenuItem><Link to='/new'>New Mission</Link></MenuItem>
-          <MenuItem><Link to='/saved'>Saved Missions</Link></MenuItem>
+          <MenuItem><Link to='/inactive'>Inactive Missions</Link></MenuItem>
           <MenuItem><Link to='/active'>Active Missions</Link></MenuItem>
           <MenuItem><Link to='/reports'>Reports</Link></MenuItem>
           <MenuItem><Link to='/map'>Map</Link></MenuItem>

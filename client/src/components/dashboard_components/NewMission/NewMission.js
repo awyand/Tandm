@@ -18,6 +18,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Input, { InputLabel } from 'material-ui-next/Input';
 import Select from 'material-ui-next/Select';
 import { MenuItem } from 'material-ui-next/Menu';
+import Button from 'material-ui-next/Button';
 
 // Styles
 const styles = {
@@ -33,7 +34,8 @@ export default class NewMission extends React.Component {
     this.state = {
       numPhones: 0,
       name: '',
-      phones: []
+      phones: [],
+      active: false
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);

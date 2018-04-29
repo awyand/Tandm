@@ -19,7 +19,8 @@ const MissionSchema = new mongoose.Schema({
     default: Date.now()
   },
   name: String,
-  phones: [PhoneSchema]
+  phones: [PhoneSchema],
+  active: Boolean
 });
 
 // define the User model schema

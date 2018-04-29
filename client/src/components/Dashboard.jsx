@@ -10,7 +10,7 @@ import Help from './dashboard_components/Help';
 import Inventory from './dashboard_components/Inventory';
 import Mapper from './dashboard_components/Mapper';
 import Reports from './dashboard_components/Reports';
-import SavedMissions from './dashboard_components/SavedMissions';
+import InactiveMissions from './dashboard_components/InactiveMissions';
 import Welcome from './dashboard_components/Welcome';
 
 
@@ -20,7 +20,7 @@ const Dashboard = ({ user }) => (
     <Card className='container'>
       <Route exact path='/dashboard' render={() => <Welcome user={user} />} />
       <Route exact path='/new' render={() => <NewMission userId={user._id} />} />
-      <Route exact path='/saved' component={SavedMissions} />
+      <Route exact path='/inactive' component={InactiveMissions} />
       <Route exact path='/active' component={ActiveMissions} />
       <Route exact path='/reports' component={Reports} />
       <Route exact path='/map' component={Mapper} />
