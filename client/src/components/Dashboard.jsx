@@ -20,7 +20,7 @@ const Dashboard = ({ user }) => (
     <Card className='container'>
       <Route exact path='/dashboard' render={() => <Welcome user={user} />} />
       <Route exact path='/new' render={() => <NewMission userId={user._id} />} />
-      <Route exact path='/inactive' component={InactiveMissions} />
+      <Route exact path='/inactive' render={() => <InactiveMissions userId={user._id}/>} />
       <Route exact path='/active' component={ActiveMissions} />
       <Route exact path='/reports' component={Reports} />
       <Route exact path='/map' component={Mapper} />

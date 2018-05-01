@@ -6,6 +6,7 @@ export default {
 
 
   // get list of all missions for user
+  getMissions: userId => axios.get(`/api/${userId}`),
 
   // post new mission to user
   addMission: function(userId, missionData) {

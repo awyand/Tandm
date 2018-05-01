@@ -10,6 +10,20 @@ router.get('/dashboard', (req, res) => {
   });
 });
 
+// Handle get request to api/:id
+router.get('/:id', (req, res) => {
+  // Find user by ID
+  User.findOne( {_id: req.params.id}, (err, user) => {
+    // Error handling
+    if (err) {
+      return res.status(500).end();
+    }
+
+    // Send match
+    res.send({missions: user.missions});
+  });
+});
+
 // handle posts to api/:id
 router.post('/:id', (req, res) => {
   // Find user by ID and push new mission data to user's mission array

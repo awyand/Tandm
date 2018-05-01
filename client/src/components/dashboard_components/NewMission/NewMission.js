@@ -56,28 +56,10 @@ export default class NewMission extends React.Component {
       numPhones: event.target.value,
     });
 
-    // Add appropriate number of blank phone objects to phones array in state
-    // for (let i = 1; i < event.target.value + 1; i++) {
-    //   const newPhoneArr = this.state.phones.concat({
-    //     id: '',
-    //     name: '',
-    //     osVersion: '',
-    //     containers: []
-    //   });
-    //
-    //   this.setState({
-    //     phones: newPhoneArr
-    //   });
-    // }
-
   }
 
   handleAddMission = event => {
     event.preventDefault();
-
-    // Check to see if there's a mission with the same name in the database
-    // If so, alert user
-    // If not, add mission
 
     API.addMission(this.props.userId, this.state)
     .then(res => {
@@ -165,48 +147,3 @@ export default class NewMission extends React.Component {
     )
   }
 }
-
-// TextField.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// Dummy data for testing POST route
-// state = {
-//   mission: {
-//     name: 'Operation Overlord',
-//     phones: [
-//       {
-//         name: 'Medic',
-//         osVersion: 'Android P',
-//         containers: [
-//           {
-//             name: 'Unclassified',
-//             networks: ['Wifi', 'Bluetooth'],
-//             apps: ['Mail', 'First Aid']
-//           },
-//           {
-//             name: 'Secret',
-//             networks: ['Cellular', 'USB'],
-//             apps: ['Signal', 'Maps']
-//           }
-//         ]
-//       },
-//       {
-//         name: 'Solider',
-//         osVersion: 'KitKat',
-//         containers: [
-//           {
-//             name: 'Unclassified',
-//             networks: ['Cellular'],
-//             apps: ['Signal']
-//           },
-//           {
-//             name: 'Secret',
-//             networks: ['Wifi', 'Bluetooth'],
-//             apps: ['Maps', 'Camera']
-//           }
-//         ]
-//       }
-//     ]
-//   }
-// }
