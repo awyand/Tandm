@@ -1,6 +1,7 @@
 // Modules
 import React from 'react';
 import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 // Project Files
 import './NewMission.css';
@@ -32,10 +33,13 @@ export default class NewMission extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numPhones: 0,
-      name: '',
-      phones: [],
-      active: false
+      redirect: false,
+      missionData: {
+        numPhones: 0,
+        name: '',
+        phones: [],
+        active: false
+      }
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -45,53 +49,71 @@ export default class NewMission extends React.Component {
   }
 
   // Methods
+  // handleNameChange = event => {
+  //   this.setState({
+  //     name: event.target.value
+  //   });
+  // }
+
   handleNameChange = event => {
     this.setState({
-      name: event.target.value
+      missionData: { ...this.state.missionData, name: event.target.value }
     });
   }
 
+  // handleNumPhonesChange = event => {
+  //   this.setState({
+  //     numPhones: event.target.value,
+  //   });
+  // }
+
   handleNumPhonesChange = event => {
     this.setState({
-      numPhones: event.target.value,
+      missionData: { ...this.state.missionData, numPhones: event.target.value },
     });
-
   }
 
   handleAddMission = event => {
     event.preventDefault();
 
-    API.addMission(this.props.userId, this.state)
+
+
+    API.addMission(this.props.userId, this.state.missionData)
     .then(res => {
       console.log('API response:');
       console.log(res);
+      // add logic for good status res
+      this.setState({
+        redirect: true
+      });
     })
     .catch(err => console.log(err));
   }
 
   updatePhone = phoneState => {
-    let match = this.state.phones.find(obj => obj.id === phoneState.id);
+    let match = this.state.missionData.phones.find(obj => obj.id === phoneState.id);
 
     if (match) {
-      const matchedIndex = this.state.phones.indexOf(match);
-      this.state.phones[matchedIndex] = phoneState;
+      const matchedIndex = this.state.missionData.phones.indexOf(match);
+      this.state.missionData.phones[matchedIndex] = phoneState;
       this.forceUpdate();
     } else {
-      const newPhoneArr = this.state.phones.concat(phoneState);
+      const newPhoneArr = this.state.missionData.phones.concat(phoneState);
+      // this.setState({
+      //   phones: newPhoneArr
+      // });
       this.setState({
-        phones: newPhoneArr
+        missionData: { ...this.state.missionData, phones: newPhoneArr }
       });
     }
   }
 
   render() {
 
-
-
     // initialize array to hold to hold phoneMain components based on state
     let numPhoneArr = [];
     // construct an array of numbers from 1 to the number of phones in mission
-    for (let i = 1; i < this.state.numPhones + 1; i++) {
+    for (let i = 1; i < this.state.missionData.numPhones + 1; i++) {
       numPhoneArr.push(i);
     }
     // construct an array of PhoneMain components based on numPhoneArr
@@ -102,6 +124,9 @@ export default class NewMission extends React.Component {
                  updatePhone={this.updatePhone}/>
     ));
 
+    if (this.state.redirect === true) {
+      return <Redirect push to='/inactive' />
+    }
 
     return (
 
@@ -112,7 +137,7 @@ export default class NewMission extends React.Component {
           <TextField
             id='missionName'
             label='Mission Name'
-            value={this.state.name}
+            value={this.state.missionData.name}
             onChange={this.handleNameChange}
             placeholder='Op Midnight'
           />
@@ -120,7 +145,7 @@ export default class NewMission extends React.Component {
           <FormControl>
             <InputLabel htmlFor="numPhones">Phones</InputLabel>
             <Select
-              value={this.state.numPhones}
+              value={this.state.missionData.numPhones}
               onChange={this.handleNumPhonesChange}
               inputProps={{
                 name: 'numPhones',
