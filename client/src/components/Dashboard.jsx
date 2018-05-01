@@ -1,19 +1,20 @@
+// Dependencies
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+// Material-UI components
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 
-import NewMission from './dashboard_components/NewMission';
-import ActiveMissions from './dashboard_components/ActiveMissions';
-import Contact from './dashboard_components/Contact';
-import Help from './dashboard_components/Help';
-import Inventory from './dashboard_components/Inventory';
-import Mapper from './dashboard_components/Mapper';
-import Reports from './dashboard_components/Reports';
-import InactiveMissions from './dashboard_components/InactiveMissions';
-import Welcome from './dashboard_components/Welcome';
-
-
+// Project components
+import NewMission from './dashboard_components/NewMission.js';
+import ActiveMissions from './dashboard_components/ActiveMissions.js';
+import Contact from './dashboard_components/Contact.js';
+import Help from './dashboard_components/Help.js';
+import Inventory from './dashboard_components/Inventory.js';
+import Mapper from './dashboard_components/Mapper.js';
+import Reports from './dashboard_components/Reports.js';
+import InactiveMissions from './dashboard_components/InactiveMissions.js';
+import Welcome from './dashboard_components/Welcome.js';
 
 const Dashboard = ({ user }) => (
 
@@ -30,9 +31,5 @@ const Dashboard = ({ user }) => (
     </Card>
 
 );
-
-// Dashboard.propTypes = {
-//   user.username: PropTypes.string.isRequired
-// };
 
 export default Dashboard;

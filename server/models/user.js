@@ -1,18 +1,22 @@
+// Dependencies
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+// Container schema, which is a subdocument of PhoneSchema
 const ContainerSchema = new mongoose.Schema({
   name: String,
   networks: Array,
   apps: Array
 });
 
+// Phone schema, which is a subdocument of MissionSchema
 const PhoneSchema = new mongoose.Schema({
   osVersion: String,
   containers: [ContainerSchema],
   name: String
 });
 
+// Mission schema, which is a subdocument of UserSchema
 const MissionSchema = new mongoose.Schema({
   dateAdded: {
     type: Date,
@@ -23,7 +27,7 @@ const MissionSchema = new mongoose.Schema({
   active: Boolean
 });
 
-// define the User model schema
+// User schema
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -32,13 +36,6 @@ const UserSchema = new mongoose.Schema({
   password: String,
   missions: [MissionSchema]
 });
-
-
-
-
-
-
-
 
 /**
  * Compare the passed password with the value in the database. A model method.
@@ -49,7 +46,6 @@ const UserSchema = new mongoose.Schema({
 UserSchema.methods.comparePassword = function comparePassword(password, callback) {
   bcrypt.compare(password, this.password, callback);
 };
-
 
 /**
  * The pre-save hook method.
@@ -75,5 +71,5 @@ UserSchema.pre('save', function saveHook(next) {
   });
 });
 
-
+// Export User model
 module.exports = mongoose.model('User', UserSchema);

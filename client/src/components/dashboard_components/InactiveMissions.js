@@ -3,13 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Project Files
-import API from '../../../utils/API.js';
+import API from '../../utils/API.js';
 
 // Material-UI Components
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui-next/Table';
 import Button from 'material-ui-next/Button';
-// import Delete from '@material-ui-next/icons/Delete';
 import Icon from 'material-ui-next/Icon';
 
 // Component Export

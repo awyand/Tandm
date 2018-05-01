@@ -1,45 +1,43 @@
+// Dependencies
 const express = require('express');
 const router = new express.Router();
 const bodyParser = require('body-parser');
 const User = require('mongoose').model('User');
 
+// GET /dashboard route
 router.get('/dashboard', (req, res) => {
+  // Respond with Status 200 and pass user from authentication middleware
   res.status(200).json({
-    // user values passed through from auth middleware
     user: req.user
   });
 });
 
-// Handle get request to api/:id
+// GET /api/:id route
 router.get('/:id', (req, res) => {
-  // Find user by ID
+  // Find user by ID in database
   User.findOne( {_id: req.params.id}, (err, user) => {
-    // Error handling
+    // Respond with Status 500 if an error occurs
     if (err) {
       return res.status(500).end();
     }
-
-    // Send match
+    // Respond with user's missions array from database
     res.send({missions: user.missions});
   });
 });
 
-// handle posts to api/:id
+// POST /api/:id route
 router.post('/:id', (req, res) => {
   // Find user by ID and push new mission data to user's mission array
-  // Pass new: true option so that Mongoose response includes new mission
+  // Pass { new: true } option so that Mongoose response includes new mission
   User.findOneAndUpdate({_id: req.params.id}, {$push: {missions: req.body.missionData}}, {new: true}, function(err, user) {
-    // error handling
+    // Respond with Status 500 if an error occurs
     if (err) {
       return res.status(500).end();
     }
-
-    // send updated array of missions
+    // Respond with updated version of user's missions array from database
     res.send({missions: user.missions});
   });
-
-
 });
 
-
+// Export router
 module.exports = router;

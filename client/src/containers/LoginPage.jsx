@@ -1,26 +1,20 @@
+// Dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 import Auth from '../modules/Auth';
 import LoginForm from '../components/LoginForm.jsx';
 
-
+// LoginPage component
 class LoginPage extends React.Component {
-
-  /**
-   * Class constructor.
-   */
   constructor(props, context) {
     super(props, context);
-
     const storedMessage = localStorage.getItem('successMessage');
     let successMessage = '';
-
     if (storedMessage) {
       successMessage = storedMessage;
       localStorage.removeItem('successMessage');
     }
 
-    // set the initial component state
     this.state = {
       errors: {},
       successMessage,
@@ -40,43 +34,37 @@ class LoginPage extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
+    // Prevent default
     event.preventDefault();
 
-    // create a string for an HTTP body message
+    // Create a string for an HTTP body message
     const username = encodeURIComponent(this.state.user.username);
     const password = encodeURIComponent(this.state.user.password);
     const formData = `username=${username}&password=${password}`;
 
-    // create an AJAX request
+    // Create an AJAX request
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/auth/login');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
+        // Success
+        // Change the component-container state
         this.setState({
           errors: {}
         });
-
-        // save the token
+        // Save the token
         Auth.authenticateUser(xhr.response.token);
-
-        // update authenticated state
+        // Update authenticated state
         this.props.toggleAuthenticateStatus()
-
-        // redirect signed in user to dashboard
+        // Redirect signed in user to dashboard
         this.props.history.push('/dashboard');
       } else {
-        // failure
-
-        // change the component state
+        // Failure
+        // Change the component state
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
-
         this.setState({
           errors
         });
@@ -99,10 +87,7 @@ class LoginPage extends React.Component {
       user
     });
   }
-
-  /**
-   * Render the component.
-   */
+  
   render() {
     return (
       <LoginForm

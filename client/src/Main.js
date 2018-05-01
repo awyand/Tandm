@@ -1,9 +1,12 @@
+// Dependencies
 import React, { Component } from 'react';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
 import initFastClick from "react-fastclick";
+
+// Material-UI components
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+// React Router components
 import {
   BrowserRouter as Router,
   Route,
@@ -12,6 +15,7 @@ import {
   withRouter
 } from 'react-router-dom'
 
+// Project components
 import HomePage from './components/HomePage.jsx';
 import LoginPage from './containers/LoginPage.jsx';
 import LogoutFunction from './containers/LogoutFunction.jsx';
@@ -19,9 +23,10 @@ import SignUpPage from './containers/SignUpPage.jsx';
 import DashboardPage from './containers/DashboardPage.jsx';
 import Auth from './modules/Auth';
 
-// remove tap delay, essential for MaterialUI to work properly
+// Remove tap delay
 initFastClick();
 
+// PrivateRoute component (will be rendered if user is authenticated)
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     Auth.isUserAuthenticated() ? (
@@ -35,6 +40,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )}/>
 )
 
+// LoggedOutRoute component (will be rendered if user logs out)
 const LoggedOutRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     Auth.isUserAuthenticated() ? (
@@ -48,12 +54,14 @@ const LoggedOutRoute = ({ component: Component, ...rest }) => (
   )}/>
 )
 
+// PropsRoute component
 const PropsRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     <Component {...props} {...rest} />
   )}/>
 )
 
+// Main component
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -63,12 +71,12 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    // check if user is logged in on refresh
+    // Check if user is logged in on refresh
     this.toggleAuthenticateStatus()
   }
 
   toggleAuthenticateStatus() {
-    // check authenticated status and toggle state based on that
+    // Check authenticated status and toggle state based on that
     this.setState({ authenticated: Auth.isUserAuthenticated() })
   }
 

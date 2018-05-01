@@ -1,5 +1,4 @@
 import React from 'react';
-import './Reports.css';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 const Reports = () => (

@@ -1,5 +1,4 @@
 import React from 'react';
-import './PhoneMain.css';
 
 // Material-UI Components
 import { FormControl, FormGroup, FormControlLabel } from 'material-ui-next/Form';
@@ -11,7 +10,7 @@ import TextField from 'material-ui-next/TextField';
 import Checkbox from 'material-ui-next/Checkbox';
 
 // Project Components
-import PhoneContainer from '../PhoneContainer'
+import PhoneContainer from './PhoneContainer'
 
 const cardStyle = {
   width: '80%',

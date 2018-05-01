@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 // Project Files
-import './NewMission.css';
-import API from '../../../utils/API.js';
+import API from '../../utils/API.js';
 
 // Project Components
-import PhoneMain from '../PhoneMain'
+import PhoneMain from './PhoneMain'
 
 // Material-UI Components
 import TextField from 'material-ui-next/TextField';

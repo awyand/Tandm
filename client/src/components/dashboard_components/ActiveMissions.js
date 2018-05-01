@@ -1,5 +1,4 @@
 import React from 'react';
-import './ActiveMissions.css';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 const ActiveMissions = () => (
