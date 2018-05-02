@@ -15,15 +15,15 @@ router.get('/dashboard', (req, res) => {
 // GET /api/:id route
 router.get('/:id', (req, res) => {
   // Find user by ID in database
-  User.findOne( {_id: req.params.id}, (err, user) => {
+  User.findOne({_id: req.params.id}, (err, user) => {
     // Respond with Status 500 if an error occurs
     if (err) {
       return res.status(500).end();
     }
-    // Respond with user's missions array from database
-    res.send({missions: user.missions});
-  });
-});
+    // Respond with user's missions array
+    res.send({missions: user.missions})
+  })
+})
 
 // POST /api/:id route
 router.post('/:id', (req, res) => {
@@ -35,6 +35,28 @@ router.post('/:id', (req, res) => {
       return res.status(500).end();
     }
     // Respond with updated version of user's missions array from database
+    res.send({missions: user.missions});
+  });
+});
+
+// PUT /api/:id route
+router.put('/:id', (req, res) => {
+  User.findOneAndUpdate({_id: req.params.id, 'missions._id': req.body.missionData._id},
+  {$set: {'missions.$': req.body.missionData}}, {new: true}, function(err, user) {
+    if (err) {
+      return res.status(500).end();
+    }
+    res.send({missions: user.missions});
+  });
+});
+
+// DELETE /api/:id/:missionId
+router.delete('/:id/:missionId', (req, res) => {
+  User.findOneAndUpdate({_id: req.params.id}, {$pull: {missions: {_id: req.params.missionId}}},
+  {new: true}, function(err, user) {
+    if (err) {
+      return res.status(500).end();
+    }
     res.send({missions: user.missions});
   });
 });

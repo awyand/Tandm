@@ -1,6 +1,6 @@
-// Modules
+// Dependencies
 import React from 'react';
-import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 // Project Files
 import API from '../../utils/API.js';
@@ -18,26 +18,59 @@ export default class InactiveMissions extends React.Component {
 
     this.state = {
       missions: []
-    }
+    };
+
+    this.handleActivate = this.handleActivate.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   // When InactiveMissions component mounts
   componentDidMount() {
-    // Get data from API
+    // Call API getMissions methods and pass userId
     API.getMissions(this.props.userId)
     .then(res => {
-      console.log('API Response:');
+      // Log API response
       console.log(res);
-
+      // Push missions array from API response to state
       this.setState({
         missions: res.data.missions
       });
+    })
+    .catch(err => console.log(err));
+  }
 
+  handleActivate = mission => {
+    event.preventDefault();
+    // Set mission active key to true
+    mission.active = true;
+    // Call API updateMission method and pass userId and mission object
+    API.updateMission(this.props.userId, mission)
+    .then(res => {
+      console.log(res);
+      this.setState({
+        missions: res.data.missions
+      });
+    })
+    .catch(err => console.log(err));
+  }
+
+  handleDelete = mission => {
+    event.preventDefault();
+    API.deleteMission(this.props.userId, mission._id)
+    .then(res => {
+      console.log(res);
+      this.setState({
+        missions: res.data.missions
+      })
     })
     .catch(err => console.log(err));
   }
 
   render() {
+
+    if (this.state.redirect === true) {
+      return <Redirect push to='/active' />
+    }
 
     return (
       <Card className="container">
@@ -49,21 +82,19 @@ export default class InactiveMissions extends React.Component {
                 <TableCell>Mission Name</TableCell>
                 <TableCell>Date Added</TableCell>
                 <TableCell># Phones</TableCell>
-                <TableCell>Active?</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.missions.map(mission => {
+              {this.state.missions.filter(mission => mission.active === false).map(mission => {
                 return (
                   <TableRow key={mission._id}>
                     <TableCell>{mission.name}</TableCell>
                     <TableCell>{mission.dateAdded}</TableCell>
                     <TableCell>{mission.phones.length}</TableCell>
-                    <TableCell>{mission.active ? 'Y' : 'N'}</TableCell>
                     <TableCell>
-                      <Button variant="raised" color="primary">Activate</Button>
-                      <Button variant="raised" color="secondary">Delete</Button>
+                      <Button variant="raised" color="primary" onClick={() => this.handleActivate(mission)}>Activate</Button>
+                      <Button variant="raised" color="secondary" onClick={() => this.handleDelete(mission)}>Delete</Button>
                     </TableCell>
                   </TableRow>
                 );
@@ -73,7 +104,5 @@ export default class InactiveMissions extends React.Component {
 
       </Card>
     )
-
-
   }
 }

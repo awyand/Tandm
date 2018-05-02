@@ -47,24 +47,11 @@ export default class NewMission extends React.Component {
     this.updatePhone = this.updatePhone.bind(this);
   }
 
-  // Methods
-  // handleNameChange = event => {
-  //   this.setState({
-  //     name: event.target.value
-  //   });
-  // }
-
   handleNameChange = event => {
     this.setState({
       missionData: { ...this.state.missionData, name: event.target.value }
     });
   }
-
-  // handleNumPhonesChange = event => {
-  //   this.setState({
-  //     numPhones: event.target.value,
-  //   });
-  // }
 
   handleNumPhonesChange = event => {
     this.setState({
@@ -74,8 +61,6 @@ export default class NewMission extends React.Component {
 
   handleAddMission = event => {
     event.preventDefault();
-
-
 
     API.addMission(this.props.userId, this.state.missionData)
     .then(res => {
@@ -123,6 +108,7 @@ export default class NewMission extends React.Component {
                  updatePhone={this.updatePhone}/>
     ));
 
+    // If redirect is true, redirect to inactive view
     if (this.state.redirect === true) {
       return <Redirect push to='/inactive' />
     }
