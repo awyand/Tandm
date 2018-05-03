@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/icons": "^1.0.0-beta.43",
     "axios": "^0.16.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",

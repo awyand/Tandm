@@ -7,13 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // React Router components
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 // Project components
 import HomePage from './components/HomePage.jsx';
@@ -81,35 +75,17 @@ class Main extends Component {
   }
 
   render() {
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Router>
           <div>
-            <div className="top-bar">
-              <div className="top-bar-left">
-                <Link to="/">Tandm</Link>
-              </div>
-              {this.state.authenticated ? (
-                <div className="top-bar-right">
-                  <Link to="/dashboard">Dashboard</Link>
-                  <Link to="/logout">Log out</Link>
-                </div>
-              ) : (
-                <div className="top-bar-right">
-                  <Link to="/login">Log in</Link>
-                  <Link to="/signup">Sign up</Link>
-                </div>
-              )}
-
-            </div>
-
             <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
             <PrivateRoute path="/dashboard" component={DashboardPage}/>
             <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
             <LoggedOutRoute path="/signup" component={SignUpPage}/>
             <Route path="/logout" component={LogoutFunction}/>
           </div>
-
         </Router>
       </MuiThemeProvider>
     );
