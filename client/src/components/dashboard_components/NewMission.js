@@ -119,6 +119,8 @@ export default class NewMission extends React.Component {
       <Card className="container">
         <CardTitle title="New Mission" className='test' />
 
+        <img src='images/wireframe.svg' />
+
           <TextField
             id='missionName'
             label='Mission Name'
