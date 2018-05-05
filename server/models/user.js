@@ -3,17 +3,19 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 // Container schema, which is a subdocument of PhoneSchema
-const ContainerSchema = new mongoose.Schema({
-  name: String,
-  networks: Array,
-  apps: Array
-});
+// const ContainerSchema = new mongoose.Schema({
+//   name: String,
+//   networks: Array,
+//   apps: Array
+// });
 
 // Phone schema, which is a subdocument of MissionSchema
 const PhoneSchema = new mongoose.Schema({
   osVersion: String,
-  containers: [ContainerSchema],
-  name: String
+  // containers: [ContainerSchema],
+  name: String,
+  apps: Array,
+  networks: Array
 });
 
 // Mission schema, which is a subdocument of UserSchema
@@ -24,7 +26,8 @@ const MissionSchema = new mongoose.Schema({
   },
   name: String,
   phones: [PhoneSchema],
-  active: Boolean
+  active: Boolean,
+  location: String
 });
 
 // User schema

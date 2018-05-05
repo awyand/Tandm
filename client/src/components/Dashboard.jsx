@@ -18,7 +18,7 @@ import Welcome from './dashboard_components/Welcome.js';
 
 const Dashboard = ({ user }) => (
 
-    <Card className='container'>
+    <div>
       <Route exact path='/dashboard' render={() => <Welcome user={user} />} />
       <Route exact path='/new' render={() => <NewMission userId={user._id} />} />
       <Route exact path='/inactive' render={() => <InactiveMissions userId={user._id}/>} />
@@ -28,7 +28,7 @@ const Dashboard = ({ user }) => (
       <Route exact path='/inventory' component={Inventory} />
       <Route exact path='/contact' component={Contact} />
       <Route exact path='/help' component={Help} />
-    </Card>
+    </div>
 
 );
 

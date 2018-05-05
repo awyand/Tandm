@@ -16288,8 +16288,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Dashboard = function Dashboard(_ref) {
   var user = _ref.user;
   return _react2.default.createElement(
-    _Card.Card,
-    { className: 'container' },
+    'div',
+    null,
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/dashboard', render: function render() {
         return _react2.default.createElement(_Welcome2.default, { user: user });
       } }),
@@ -17192,6 +17192,14 @@ var _PhoneMain = __webpack_require__(282);
 
 var _PhoneMain2 = _interopRequireDefault(_PhoneMain);
 
+var _Phone = __webpack_require__(614);
+
+var _Phone2 = _interopRequireDefault(_Phone);
+
+var _PhoneRoster = __webpack_require__(615);
+
+var _PhoneRoster2 = _interopRequireDefault(_PhoneRoster);
+
 var _TextField = __webpack_require__(208);
 
 var _TextField2 = _interopRequireDefault(_TextField);
@@ -17242,8 +17250,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // Styles
 var styles = {
-  addMissionBtn: {
-    margin: '10px auto'
+  missionInfoContainer: {
+    padding: '8px',
+    margin: '100px 0 0 60px',
+    textAlign: 'center',
+    width: '40%'
+  },
+  missionField: {
+    margin: '5px auto'
+  },
+  phoneListContainer: {
+    width: '40%',
+    float: 'left'
+  },
+  phoneRosterContainer: {
+    clear: 'left'
   }
 
   // Component Export
@@ -17262,9 +17283,22 @@ var NewMission = function (_React$Component) {
       });
     };
 
+    _this.handleLocationChange = function (event) {
+      _this.setState({
+        missionData: _extends({}, _this.state.missionData, { location: event.target.value })
+      });
+    };
+
     _this.handleNumPhonesChange = function (event) {
       _this.setState({
         missionData: _extends({}, _this.state.missionData, { numPhones: event.target.value })
+      });
+      _this.forceUpdate();
+    };
+
+    _this.handleRosterPhoneClick = function (event) {
+      _this.setState({
+        activePhone: event.target.id
       });
     };
 
@@ -17283,6 +17317,32 @@ var NewMission = function (_React$Component) {
       });
     };
 
+    _this.handleAppClick = function (event) {
+      var clickedIcon = event.target.id;
+      var indexOfClickedIcon = _this.state.apps.indexOf(clickedIcon);
+
+      if (indexOfClickedIcon !== -1) {
+        _this.setState({ apps: _this.state.apps.filter(function (app) {
+            return app !== clickedIcon;
+          }) });
+      } else {
+        _this.setState({ apps: _this.state.apps.concat(clickedIcon) });
+      }
+    };
+
+    _this.handleNetworkClick = function (event) {
+      var clickedIcon = event.target.id;
+      var indexOfClickedIcon = _this.state.networks.indexOf(clickedIcon);
+
+      if (indexOfClickedIcon !== -1) {
+        _this.setState({ networks: _this.state.networks.filter(function (network) {
+            return network !== clickedIcon;
+          }) });
+      } else {
+        _this.setState({ networks: _this.state.networks.concat(clickedIcon) });
+      }
+    };
+
     _this.updatePhone = function (phoneState) {
       var match = _this.state.missionData.phones.find(function (obj) {
         return obj.id === phoneState.id;
@@ -17294,9 +17354,6 @@ var NewMission = function (_React$Component) {
         _this.forceUpdate();
       } else {
         var newPhoneArr = _this.state.missionData.phones.concat(phoneState);
-        // this.setState({
-        //   phones: newPhoneArr
-        // });
         _this.setState({
           missionData: _extends({}, _this.state.missionData, { phones: newPhoneArr })
         });
@@ -17305,113 +17362,169 @@ var NewMission = function (_React$Component) {
 
     _this.state = {
       redirect: false,
+      activateOnSave: false,
       missionData: {
         numPhones: 0,
         name: '',
         phones: [],
-        active: false
-      }
+        active: false,
+        location: ''
+      },
+      apps: [],
+      networks: [],
+      activePhone: ''
     };
 
     _this.handleNameChange = _this.handleNameChange.bind(_this);
+    _this.handleLocationChange = _this.handleLocationChange.bind(_this);
     _this.handleNumPhonesChange = _this.handleNumPhonesChange.bind(_this);
+    _this.handleRosterPhoneClick = _this.handleRosterPhoneClick.bind(_this);
     _this.handleAddMission = _this.handleAddMission.bind(_this);
     _this.updatePhone = _this.updatePhone.bind(_this);
+    _this.handleAppClick = _this.handleAppClick.bind(_this);
+    _this.handleNetworkClick = _this.handleNetworkClick.bind(_this);
     return _this;
   }
+
+  // Mission Information box change handlers
+
+
+  // Roster click handler
+
+
+  // Submit Mission button click handler
+
+
+  // App click handler
+
+
+  // Network click hanlder
+
+
+  // Add Phone click handler
 
   _createClass(NewMission, [{
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      // initialize array to hold to hold phoneMain components based on state
-      var numPhoneArr = [];
-      // construct an array of numbers from 1 to the number of phones in mission
+      var phoneArray = [];
       for (var i = 1; i < this.state.missionData.numPhones + 1; i++) {
-        numPhoneArr.push(i);
+        phoneArray.push(i);
       }
-      // construct an array of PhoneMain components based on numPhoneArr
-      var phoneMainList = numPhoneArr.map(function (numPhone) {
-        return _react2.default.createElement(_PhoneMain2.default, { id: 'Phone' + numPhone,
-          key: 'Phone-' + numPhone,
-          name: 'Phone ' + numPhone,
-          updatePhone: _this2.updatePhone });
+      var phoneList = phoneArray.map(function (phone) {
+        return _react2.default.createElement(_Phone2.default, { id: 'Phone-' + phone,
+          key: 'Phone-' + phone,
+          name: 'Phone-' + phone
+        });
       });
 
-      // If redirect is true, redirect to inactive view
+      // If redirect is true, redirect to appropriate view
+      // This is used when user submits a mission
       if (this.state.redirect === true) {
-        return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/inactive' });
+        if (this.state.activateOnSave === false) {
+          return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/inactive' });
+        }
+
+        if (this.state.activateOnSave === true) {
+          return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/active' });
+        }
       }
 
       return _react2.default.createElement(
-        _Card.Card,
-        { className: 'container' },
-        _react2.default.createElement(_Card.CardTitle, { title: 'New Mission', className: 'test' }),
-        _react2.default.createElement('img', { src: 'images/wireframe.svg' }),
-        _react2.default.createElement(_TextField2.default, {
-          id: 'missionName',
-          label: 'Mission Name',
-          value: this.state.missionData.name,
-          onChange: this.handleNameChange,
-          placeholder: 'Op Midnight'
-        }),
+        'div',
+        null,
         _react2.default.createElement(
-          _Form.FormControl,
-          null,
+          _Card.Card,
+          { style: styles.missionInfoContainer },
+          _react2.default.createElement(_Card.CardTitle, { title: 'Mission Information' }),
+          _react2.default.createElement(_TextField2.default, {
+            id: 'missionName',
+            label: 'Mission Name',
+            value: this.state.missionData.name,
+            onChange: this.handleNameChange,
+            placeholder: 'Op Midnight',
+            style: styles.missionField
+          }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(_TextField2.default, {
+            id: 'missionLocation',
+            label: 'Location',
+            value: this.state.missionData.location,
+            onChange: this.handleLocationChange,
+            placeholder: 'Baghdad, Iraq',
+            style: styles.missionField
+          }),
+          _react2.default.createElement('br', null),
           _react2.default.createElement(
-            _Input.InputLabel,
-            { htmlFor: 'numPhones' },
-            'Phones'
-          ),
-          _react2.default.createElement(
-            _Select2.default,
-            {
-              value: this.state.missionData.numPhones,
-              onChange: this.handleNumPhonesChange,
-              inputProps: {
-                name: 'numPhones',
-                id: 'numPhones'
-              }
-            },
+            _Form.FormControl,
+            { style: styles.missionField },
             _react2.default.createElement(
-              _Menu.MenuItem,
-              { value: 0 },
-              '0'
+              _Input.InputLabel,
+              { htmlFor: 'numPhones' },
+              'Phones'
             ),
             _react2.default.createElement(
-              _Menu.MenuItem,
-              { value: 1 },
-              '1'
-            ),
-            _react2.default.createElement(
-              _Menu.MenuItem,
-              { value: 2 },
-              '2'
-            ),
-            _react2.default.createElement(
-              _Menu.MenuItem,
-              { value: 3 },
-              '3'
-            ),
-            _react2.default.createElement(
-              _Menu.MenuItem,
-              { value: 4 },
-              '4'
-            ),
-            _react2.default.createElement(
-              _Menu.MenuItem,
-              { value: 5 },
-              '5'
+              _Select2.default,
+              {
+                value: this.state.missionData.numPhones,
+                onChange: this.handleNumPhonesChange,
+                inputProps: {
+                  name: 'numPhones',
+                  id: 'numPhones'
+                }
+              },
+              _react2.default.createElement(
+                _Menu.MenuItem,
+                { value: 0 },
+                '0'
+              ),
+              _react2.default.createElement(
+                _Menu.MenuItem,
+                { value: 1 },
+                '1'
+              ),
+              _react2.default.createElement(
+                _Menu.MenuItem,
+                { value: 2 },
+                '2'
+              ),
+              _react2.default.createElement(
+                _Menu.MenuItem,
+                { value: 3 },
+                '3'
+              ),
+              _react2.default.createElement(
+                _Menu.MenuItem,
+                { value: 4 },
+                '4'
+              ),
+              _react2.default.createElement(
+                _Menu.MenuItem,
+                { value: 5 },
+                '5'
+              )
             )
           )
         ),
-        phoneMainList,
-        _react2.default.createElement('br', null),
         _react2.default.createElement(
-          _FloatingActionButton2.default,
-          { onClick: this.handleAddMission, style: styles.addMissionBtn },
-          _react2.default.createElement(_add2.default, null)
+          _Card.Card,
+          { style: styles.phoneRosterContainer },
+          this.state.missionData.numPhones > 0 && _react2.default.createElement(_PhoneRoster2.default, { handleRosterPhoneClick: this.handleRosterPhoneClick,
+            numPhones: this.state.missionData.numPhones
+          })
+        ),
+        _react2.default.createElement(
+          _Button2.default,
+          { variant: 'raised', color: 'primary', onClick: this.handleAddMission },
+          'Add Mission'
+        ),
+        _react2.default.createElement(
+          _Card.Card,
+          { style: styles.phoneListContainer },
+          phoneList.filter(function (phone) {
+            return phone.props.id === _this2.state.activePhone;
+          })
         )
       );
     }
@@ -70539,6 +70652,475 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 614 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Button = __webpack_require__(122);
+
+var _Button2 = _interopRequireDefault(_Button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Material-UI Components
+
+
+var styles = {
+  svgStyle: {
+    enableBackground: 'new 0 0 101.001 101.001',
+    margin: '100px auto'
+  }
+
+  // Component Export
+};
+var Phone = function (_React$Component) {
+  _inherits(Phone, _React$Component);
+
+  function Phone(props) {
+    _classCallCheck(this, Phone);
+
+    var _this = _possibleConstructorReturn(this, (Phone.__proto__ || Object.getPrototypeOf(Phone)).call(this, props));
+
+    _this.handleNameChange = function (event) {
+      _this.setState({
+        name: event.target.value
+      });
+    };
+
+    _this.handleAppClick = function (event) {
+      var clickedIcon = event.target.id;
+      var indexOfClickedIcon = _this.state.apps.indexOf(clickedIcon);
+
+      if (indexOfClickedIcon !== -1) {
+        _this.setState({ apps: _this.state.apps.filter(function (app) {
+            return app !== clickedIcon;
+          }) });
+      } else {
+        _this.setState({ apps: _this.state.apps.concat(clickedIcon) });
+      }
+    };
+
+    _this.handleNetworkClick = function (event) {
+      var clickedIcon = event.target.id;
+      var indexOfClickedIcon = _this.state.networks.indexOf(clickedIcon);
+
+      if (indexOfClickedIcon !== -1) {
+        _this.setState({ networks: _this.state.networks.filter(function (network) {
+            return network !== clickedIcon;
+          }) });
+      } else {
+        _this.setState({ networks: _this.state.networks.concat(clickedIcon) });
+      }
+    };
+
+    _this.state = {
+      name: '',
+      networks: [],
+      apps: []
+    };
+
+    _this.handleAppClick = _this.handleAppClick.bind(_this);
+    _this.handleNetworkClick = _this.handleNetworkClick.bind(_this);
+    _this.handleNameChange = _this.handleNameChange.bind(_this);
+    return _this;
+  }
+
+  // App click handler
+
+
+  // Network click hanlder
+
+
+  _createClass(Phone, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'svg',
+          { version: '1.1', id: 'Capa_1', x: '0px', y: '0px', width: '512px',
+            height: '512px', viewBox: '0 0 101.001 101.001',
+            style: styles.svgStyle },
+          _react2.default.createElement('path', { d: 'M66.132,0H34.87c-5.692,0-10.306,4.614-10.306,10.307v80.387c0, 5.692,4.614,10.307,10.306,10.307h31.262   c5.691,0,10.306-4.614, 10.306-10.307V10.306C76.438,4.614,71.823,0,66.132,0z M65.188, 6.25c0.759,0,1.375,0.615,1.375,1.375   c0,0.76-0.616,1.375-1.375, 1.375s-1.375-0.615-1.375-1.375C63.813,6.865,64.429,6.25,65.188, 6.25z M60.063,7.25   c0.414,0,0.75,0.336,0.75,0.75c0,0.414-0.336, 0.75-0.75,0.75s-0.75-0.336-0.75-0.75C59.313,7.586,59.648,7.25, 60.063,7.25z    M57.626,7.25c0.414,0,0.75,0.336,0.75,0.75c0, 0.414-0.336,0.75-0.75,0.75s-0.75-0.336-0.75-0.75   C56.876,7.586, 57.212,7.25,57.626,7.25z M44.75,4.5h11.5c0.345,0,0.625,0.279,0.625, 0.625c0,0.346-0.28,0.625-0.625,0.625h-11.5   c-0.345, 0-0.625-0.279-0.625-0.625C44.125,4.779,44.405,4.5,44.75, 4.5z M54.884,98.309h-8.766c-1.446,0-2.617-1.172-2.617-2.617h14 C57.501,97.137,56.329,98.309,54.884,98.309z M73.056,90.229h-45.11V10.77h45.11V90.229z', fill: '#575b5e' }),
+          _react2.default.createElement('image', { id: 'cell',
+            onClick: this.handleNetworkClick,
+            className: 'hover-pointer',
+            xlinkHref: 'images/app-icons/cell-' + (this.state.networks.includes('cell') ? 'color' : 'bw') + '.png',
+            height: '5',
+            width: '5',
+            x: '67',
+            y: '11'
+          }),
+          _react2.default.createElement('image', { id: 'wifi',
+            onClick: this.handleNetworkClick,
+            className: 'hover-pointer',
+            xlinkHref: 'images/app-icons/wifi-' + (this.state.networks.includes('wifi') ? 'color' : 'bw') + '.png',
+            height: '5',
+            width: '5',
+            x: '60',
+            y: '11'
+          }),
+          _react2.default.createElement('image', { id: 'usb',
+            onClick: this.handleNetworkClick,
+            className: 'hover-pointer',
+            xlinkHref: 'images/app-icons/usb-' + (this.state.networks.includes('usb') ? 'color' : 'bw') + '.png',
+            height: '5',
+            width: '5',
+            x: '53',
+            y: '11'
+          }),
+          _react2.default.createElement('image', { id: 'bluetooth',
+            onClick: this.handleNetworkClick,
+            className: 'hover-pointer',
+            xlinkHref: 'images/app-icons/bluetooth-' + (this.state.networks.includes('bluetooth') ? 'color' : 'bw') + '.png',
+            height: '5',
+            width: '5',
+            x: '46',
+            y: '11'
+          }),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'mail',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/mail-' + (this.state.apps.includes('mail') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '30',
+              y: '20'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '33', y: '35', fontFamily: 'Roboto', fontSize: '3px' },
+              'Mail'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'messages',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/messages-' + (this.state.apps.includes('messages') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '44.5',
+              y: '20'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '47.25', y: '35', fontFamily: 'Roboto', fontSize: '3px' },
+              'Chat'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'chrome',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/chrome-' + (this.state.apps.includes('chrome') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '59',
+              y: '20'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '59.75', y: '35', fontFamily: 'Roboto', fontSize: '3px' },
+              'Chrome'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'camera',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/camera-' + (this.state.apps.includes('camera') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '30',
+              y: '42'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '31', y: '57', fontFamily: 'Roboto', fontSize: '3px' },
+              'Camera'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'maps',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/maps-' + (this.state.apps.includes('maps') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '44.5',
+              y: '42'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '46.8', y: '57', fontFamily: 'Roboto', fontSize: '3px' },
+              'Maps'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'weather',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/weather-' + (this.state.apps.includes('weather') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '59',
+              y: '42'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '59.5', y: '57', fontFamily: 'Roboto', fontSize: '3px' },
+              'Weather'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'aid',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/aid-' + (this.state.apps.includes('aid') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '30',
+              y: '64'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '30.65', y: '79', fontFamily: 'Roboto', fontSize: '3px' },
+              'First Aid'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'survival',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/survival-' + (this.state.apps.includes('survival') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '44.5',
+              y: '64'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '45.4', y: '79', fontFamily: 'Roboto', fontSize: '3px' },
+              'Survival'
+            )
+          ),
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement('image', { id: 'radar',
+              onClick: this.handleAppClick,
+              className: 'hover-pointer',
+              xlinkHref: 'images/app-icons/radar-' + (this.state.apps.includes('radar') ? 'color' : 'bw') + '.png',
+              height: '12',
+              width: '12',
+              x: '59',
+              y: '64'
+            }),
+            _react2.default.createElement(
+              'text',
+              { x: '61', y: '79', fontFamily: 'Roboto', fontSize: '3px' },
+              'Radar'
+            )
+          ),
+          _react2.default.createElement(
+            'text',
+            { x: '43.5', y: '86', fontFamily: 'Roboto', fontSize: '4px' },
+            this.props.name
+          )
+        ),
+        _react2.default.createElement(
+          _Button2.default,
+          { variant: 'raised', color: 'primary' },
+          'Add Phone'
+        )
+      );
+    }
+  }]);
+
+  return Phone;
+}(_react2.default.Component);
+
+exports.default = Phone;
+
+/***/ }),
+/* 615 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _Form = __webpack_require__(77);
+
+var _Card = __webpack_require__(24);
+
+var _Input = __webpack_require__(53);
+
+var _Input2 = _interopRequireDefault(_Input);
+
+var _Select = __webpack_require__(79);
+
+var _Select2 = _interopRequireDefault(_Select);
+
+var _Menu = __webpack_require__(78);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Material-UI Components
+
+
+// Styles
+var styles = {
+  rosterImg: {
+    height: '100px'
+  },
+  rosterContainer: {
+    width: '40%',
+    margin: '60px 60px'
+  },
+  phoneRosterItem: {
+    float: 'left'
+  }
+
+  // Component Export
+};
+var PhoneRoster = function (_React$Component) {
+  _inherits(PhoneRoster, _React$Component);
+
+  function PhoneRoster(props) {
+    _classCallCheck(this, PhoneRoster);
+
+    var _this = _possibleConstructorReturn(this, (PhoneRoster.__proto__ || Object.getPrototypeOf(PhoneRoster)).call(this, props));
+
+    _this.state = {
+      numPhones: _this.props.numPhones,
+      phoneStatus: []
+    };
+
+    _this.setPhoneStatuses = _this.setPhoneStatuses.bind(_this);
+    return _this;
+  }
+
+  _createClass(PhoneRoster, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setPhoneStatuses();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(newProps) {
+      var _this2 = this;
+
+      this.setState({ numPhones: newProps.numPhones });
+      setTimeout(function () {
+        return _this2.setPhoneStatuses();
+      }, 1);
+    }
+  }, {
+    key: 'setPhoneStatuses',
+    value: function setPhoneStatuses() {
+      var phoneStatus = [];
+      for (var i = 1; i <= this.state.numPhones; i++) {
+        phoneStatus.push('red');
+      }
+      this.setState({
+        phoneStatus: phoneStatus
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      var roster = [];
+      for (var i = 1; i <= this.state.numPhones; i++) {
+        roster.push(_react2.default.createElement(
+          'div',
+          { style: styles.phoneRosterItem },
+          _react2.default.createElement('img', { key: 'Phone-' + i,
+            id: 'Phone-' + i,
+            src: 'images/wireframe-' + this.state.phoneStatus[i - 1] + '.svg',
+            style: styles.rosterImg,
+            className: 'hover-pointer',
+            onClick: this.props.handleRosterPhoneClick
+          }),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Phone-' + i
+          )
+        ));
+      }
+
+      return _react2.default.createElement(
+        _Card.Card,
+        { style: styles.rosterContainer },
+        roster
+      );
+    }
+  }]);
+
+  return PhoneRoster;
+}(_react2.default.Component);
+
+exports.default = PhoneRoster;
 
 /***/ })
 /******/ ]);
