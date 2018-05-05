@@ -1,6 +1,6 @@
 // Dependencies
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -8,7 +8,6 @@ import classNames from 'classnames';
 import Auth from '../modules/Auth';
 import Dashboard from '../components/Dashboard.jsx';
 import { newMissionItems, missionItems, reportItems, inventoryItems, miscItems } from './Sidebar';
-// import Sidebar from '../components/Sidebar.jsx';
 
 // Material-UI components
 import AppBar from 'material-ui-next/AppBar';

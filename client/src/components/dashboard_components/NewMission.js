@@ -1,13 +1,12 @@
 // Modules
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Redirect } from 'react-router-dom';
 
 // Project Files
 import API from '../../utils/API.js';
 
 // Project Components
-import PhoneMain from './PhoneMain';
 import Phone from './Phone';
 import PhoneRoster from './PhoneRoster';
 
@@ -15,8 +14,6 @@ import PhoneRoster from './PhoneRoster';
 import TextField from 'material-ui-next/TextField';
 import { FormControl, FormGroup, FormControlLabel } from 'material-ui-next/Form';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import Input, { InputLabel } from 'material-ui-next/Input';
 import Select from 'material-ui-next/Select';
 import { MenuItem } from 'material-ui-next/Menu';

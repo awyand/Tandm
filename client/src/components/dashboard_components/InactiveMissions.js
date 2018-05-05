@@ -1,6 +1,5 @@
 // Dependencies
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 // Project Files
 import API from '../../utils/API.js';
@@ -9,7 +8,6 @@ import API from '../../utils/API.js';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui-next/Table';
 import Button from 'material-ui-next/Button';
-import Icon from 'material-ui-next/Icon';
 
 // Component Export
 export default class InactiveMissions extends React.Component {
