@@ -14,10 +14,6 @@ const styles = {
   rosterImg: {
     height: '100px'
   },
-  rosterContainer: {
-    width: '40%',
-    margin: '60px 60px'
-  },
   phoneRosterItem: {
     float: 'left'
   }
@@ -61,9 +57,10 @@ export default class PhoneRoster extends React.Component {
     let roster = [];
     for (let i = 1; i <= this.state.numPhones; i++) {
       roster.push(
-        <div style={styles.phoneRosterItem}>
-          <img key={`Phone-${i}`}
-               id={`Phone-${i}`}
+        <div style={styles.phoneRosterItem}
+             key={`Phone-${i}`}>
+          <img id={`Phone-${i}`}
+               name={`Phone-${i}`}
                src={`images/wireframe-${this.state.phoneStatus[i-1]}.svg`}
                style={styles.rosterImg}
                className='hover-pointer'
@@ -74,12 +71,7 @@ export default class PhoneRoster extends React.Component {
       )
     }
 
-    return (
+    return roster
 
-      <Card style={styles.rosterContainer}>
-        {roster}
-      </Card>
-
-    )
   }
 }

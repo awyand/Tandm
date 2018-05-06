@@ -21,21 +21,29 @@ import Button from 'material-ui-next/Button';
 
 // Styles
 const styles = {
-  missionInfoContainer: {
+  newMissionContainer: {
+    width: '90%',
+    marginTop: '100px'
+  },
+  missionInfoAndRosterContainer: {
+    width: '45%',
+    float: 'left'
+  },
+  missionInfoCard: {
     padding: '8px',
-    margin: '100px 0 0 60px',
     textAlign: 'center',
-    width: '40%'
+    width: '100%'
   },
   missionField: {
     margin: '5px auto'
   },
-  phoneListContainer: {
-    width: '40%',
-    float: 'left'
+  phoneRosterCard: {
+    width: '100%',
+    marginTop: '30px',
+    textAlign: 'center'
   },
-  phoneRosterContainer: {
-    clear: 'left'
+  phoneConfigContainer: {
+    marginLeft: '10px'
   }
 }
 
@@ -53,19 +61,16 @@ export default class NewMission extends React.Component {
         active: false,
         location: ''
       },
-      apps: [],
-      networks: [],
-      activePhone: ''
+      activePhone: '',
+      activePhoneSavedState: {},
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleNumPhonesChange = this.handleNumPhonesChange.bind(this);
     this.handleRosterPhoneClick = this.handleRosterPhoneClick.bind(this);
+    this.handleSavePhone = this.handleSavePhone.bind(this);
     this.handleAddMission = this.handleAddMission.bind(this);
-    this.updatePhone = this.updatePhone.bind(this);
-    this.handleAppClick = this.handleAppClick.bind(this);
-    this.handleNetworkClick = this.handleNetworkClick.bind(this);
   }
 
   // Mission Information box change handlers
@@ -90,9 +95,31 @@ export default class NewMission extends React.Component {
 
   // Roster click handler
   handleRosterPhoneClick = event => {
+
+    // Check to see if phone is already in phone array
+    let match = this.state.missionData.phones.find(phone => phone.name === event.target.name);
+
     this.setState({
-      activePhone: event.target.id
+      activePhoneSavedState: match,
+      activePhone: event.target.id,
     });
+  }
+
+  // Handle save phone click handler
+  handleSavePhone = newPhone => {
+    let match = this.state.missionData.phones.find(phone => phone.name === newPhone.name);
+
+    if (match) {
+      const matchedIndex = this.state.missionData.phones.indexOf(match);
+      this.state.missionData.phones[matchedIndex] = newPhone;
+    } else {
+      const updatedPhonesArray = this.state.missionData.phones.concat(newPhone);
+      this.setState({
+        missionData: { ...this.state.missionData, phones: updatedPhonesArray}
+      });
+    }
+
+    this.forceUpdate();
   }
 
   // Submit Mission button click handler
@@ -111,59 +138,9 @@ export default class NewMission extends React.Component {
     .catch(err => console.log(err));
   }
 
-  // App click handler
-  handleAppClick = event => {
-    const clickedIcon = event.target.id;
-    const indexOfClickedIcon = this.state.apps.indexOf(clickedIcon);
 
-    if (indexOfClickedIcon !== -1) {
-      this.setState({apps: this.state.apps.filter(app => app !== clickedIcon)})
-    } else {
-      this.setState({apps: this.state.apps.concat(clickedIcon)})
-    }
-  }
-
-  // Network click hanlder
-  handleNetworkClick = event => {
-    const clickedIcon = event.target.id;
-    const indexOfClickedIcon = this.state.networks.indexOf(clickedIcon);
-
-    if (indexOfClickedIcon !== -1) {
-      this.setState({networks: this.state.networks.filter(network => network !== clickedIcon)})
-    } else {
-      this.setState({networks: this.state.networks.concat(clickedIcon)})
-    }
-  }
-
-  // Add Phone click handler
-
-  updatePhone = phoneState => {
-    let match = this.state.missionData.phones.find(obj => obj.id === phoneState.id);
-
-    if (match) {
-      const matchedIndex = this.state.missionData.phones.indexOf(match);
-      this.state.missionData.phones[matchedIndex] = phoneState;
-      this.forceUpdate();
-    } else {
-      const newPhoneArr = this.state.missionData.phones.concat(phoneState);
-      this.setState({
-        missionData: { ...this.state.missionData, phones: newPhoneArr }
-      });
-    }
-  }
 
   render() {
-
-    let phoneArray = [];
-    for (let i = 1; i < this.state.missionData.numPhones + 1; i++) {
-      phoneArray.push(i);
-    }
-    let phoneList = phoneArray.map(phone => (
-      <Phone id={`Phone-${phone}`}
-             key={`Phone-${phone}`}
-             name={`Phone-${phone}`}
-      />
-    ));
 
     // If redirect is true, redirect to appropriate view
     // This is used when user submits a mission
@@ -179,73 +156,87 @@ export default class NewMission extends React.Component {
 
     return (
 
-      <div>
+      <div style={styles.newMissionContainer}>
 
-      <Card style={styles.missionInfoContainer}>
-        <CardTitle title="Mission Information" />
+        <div style={styles.missionInfoAndRosterContainer}>
 
-          <TextField
-            id='missionName'
-            label='Mission Name'
-            value={this.state.missionData.name}
-            onChange={this.handleNameChange}
-            placeholder='Op Midnight'
-            style={styles.missionField}
-          />
+          <Card style={styles.missionInfoCard}>
+            <CardTitle title="Mission Information" />
 
-          <br />
+              <TextField
+                id='missionName'
+                label='Mission Name'
+                value={this.state.missionData.name}
+                onChange={this.handleNameChange}
+                placeholder='Op Midnight'
+                style={styles.missionField}
+              />
 
-          <TextField
-            id='missionLocation'
-            label='Location'
-            value={this.state.missionData.location}
-            onChange={this.handleLocationChange}
-            placeholder='Baghdad, Iraq'
-            style={styles.missionField}
-          />
+              <br />
 
-          <br />
+              <TextField
+                id='missionLocation'
+                label='Location'
+                value={this.state.missionData.location}
+                onChange={this.handleLocationChange}
+                placeholder='Baghdad, Iraq'
+                style={styles.missionField}
+              />
 
-          <FormControl style={styles.missionField}>
-            <InputLabel htmlFor="numPhones">Phones</InputLabel>
-            <Select
-              value={this.state.missionData.numPhones}
-              onChange={this.handleNumPhonesChange}
-              inputProps={{
-                name: 'numPhones',
-                id: 'numPhones',
-              }}
-            >
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>
-      </Card>
+              <br />
 
-      <Card style={styles.phoneRosterContainer}>
-        {
-          this.state.missionData.numPhones > 0 &&
-            <PhoneRoster handleRosterPhoneClick={this.handleRosterPhoneClick}
-                         numPhones={this.state.missionData.numPhones}
-            />
-        }
-      </Card>
+              <FormControl style={styles.missionField}>
+                <InputLabel htmlFor="numPhones">Phones</InputLabel>
+                <Select
+                  value={this.state.missionData.numPhones}
+                  onChange={this.handleNumPhonesChange}
+                  inputProps={{
+                    name: 'numPhones',
+                    id: 'numPhones',
+                  }}
+                >
+                  <MenuItem value={0}>0</MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
+                </Select>
+              </FormControl>
+
+          </Card>
 
 
 
-      <Button variant="raised" color="primary" onClick={this.handleAddMission}>Add Mission</Button>
+          {
+            this.state.missionData.numPhones > 0 &&
+            <Card style={styles.phoneRosterCard}>
+              <CardTitle title="Phone Roster" />
+                <PhoneRoster handleRosterPhoneClick={this.handleRosterPhoneClick}
+                             numPhones={this.state.missionData.numPhones}
+                />
 
-      {/* {phoneList} */}
+                <br />
 
-      <Card style={styles.phoneListContainer}>
-        { phoneList.filter(phone => phone.props.id === this.state.activePhone)}
-      </Card>
+                <Button variant="raised" color="primary" onClick={this.handleAddMission}>Add Mission</Button>
+              </Card>
+          }
 
+        </div>
 
+        <div style={styles.phoneConfigContainer}>
+          {
+            this.state.activePhone &&
+              <Card>
+                <Phone id={this.state.activePhone}
+                       name={this.state.activePhone}
+                       handleSavePhone={this.handleSavePhone}
+                       savedState={this.activePhoneSavedState}
+                       key={this.state.activePhone}
+                />
+              </Card>
+          }
+        </div>
 
 
     </div>

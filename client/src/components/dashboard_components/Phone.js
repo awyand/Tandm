@@ -2,34 +2,61 @@ import React from 'react';
 
 // Material-UI Components
 import Button from 'material-ui-next/Button';
+import { FormControl, FormGroup, FormControlLabel } from 'material-ui-next/Form';
+import Input, { InputLabel } from 'material-ui-next/Input';
+import Select from 'material-ui-next/Select';
+import { MenuItem } from 'material-ui-next/Menu';
 
 const styles = {
   svgStyle: {
     enableBackground:'new 0 0 101.001 101.001',
-    margin: '100px auto'
+    margin: '0 auto'
   }
 }
+
+const osOptions = [
+  'Android P',
+  'Oreo',
+  'Nougat',
+  'Marshmallow',
+  'Lollipop',
+  'KitKat'
+];
 
 // Component Export
 export default class Phone extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      networks: [],
-      apps: []
-    };
+    this.state = this.props.savedState ||
+      {
+        name: this.props.name,
+        networks: [],
+        apps: [],
+        osVersion: '',
+      };
 
     this.handleAppClick = this.handleAppClick.bind(this);
     this.handleNetworkClick = this.handleNetworkClick.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleOsChange = this.handleOsChange.bind(this);
   }
 
-  handleNameChange = event => {
-    this.setState({
-      name: event.target.value
-    });
+  componentWillReceiveProps(newProps) {
+    if (newProps.savedState) {
+      this.setState({
+        name: newProps.savedState.name,
+        apps: newProps.savedState.apps,
+        networks: newProps.savedState.networks,
+        osVersion: newProps.savedState.osVersion
+      });
+    } else {
+      this.setState({
+        name: newProps.name,
+        apps: [],
+        networks: [],
+        osVersion: ''
+      });
+    }
   }
 
   // App click handler
@@ -53,6 +80,35 @@ export default class Phone extends React.Component {
       this.setState({networks: this.state.networks.filter(network => network !== clickedIcon)})
     } else {
       this.setState({networks: this.state.networks.concat(clickedIcon)})
+    }
+  }
+
+  handleOsChange = event => {
+    this.setState({
+      osVersion: event.target.value
+    });
+  }
+
+  savePhoneState = event => {
+
+    // Validation
+    if (this.state.apps.length < 1) {
+      console.log('Please select at least one app');
+    } else if (this.state.networks.length < 1) {
+      console.log('Please select at least one network');
+    } else if (!this.state.osVersion) {
+      console.log('Please select OS Version');
+    } else {
+      // If form is filled out sufficiently
+      // Construct newPhone object
+      const newPhone = {
+        name: event.target.name,
+        apps: this.state.apps,
+        networks: this.state.networks,
+        osVersion: this.state.osVersion
+      }
+      // Call NewMission's handleSavePhone method, passing newPhone object
+      setTimeout(() => this.props.handleSavePhone(newPhone), 1);
     }
   }
 
@@ -251,7 +307,35 @@ export default class Phone extends React.Component {
 
       </svg>
 
-      <Button variant="raised" color="primary">Add Phone</Button>
+      <FormControl>
+        <InputLabel htmlFor="osVersion">OS Version</InputLabel>
+
+        <Select
+          value={this.state.osVersion}
+          onChange={this.handleOsChange}
+          placeholder='Oreo'
+          input={<Input id='osVersion' />}
+        >
+
+          {osOptions.map(osOption => (
+            <MenuItem key={osOption}
+                      value={osOption}
+            >
+              {osOption}
+            </MenuItem>
+          ))}
+
+        </Select>
+      </FormControl>
+
+      <Button variant="raised"
+              color="primary"
+              key={this.props.name}
+              name={this.props.name}
+              onClick={this.savePhoneState}>
+        Save Phone
+      </Button>
+
     </div>
     )
   }
