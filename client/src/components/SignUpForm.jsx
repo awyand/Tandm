@@ -15,7 +15,7 @@ const styles = {
     padding: '30px'
   },
   logo: {
-    height: '180px'
+    height: '150px'
   },
   welcomeText: {
     fontSize: '20px'

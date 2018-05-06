@@ -7,8 +7,7 @@ body {
   margin: 0;
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
-  /* background-image: linear-gradient(-90deg, #0068B8, #0A205C); */
-  background-image: linear-gradient(-90deg, #1AA4F9, #1B3A7E);
+  background-image: linear-gradient(-90deg, #2D81E1, #0C4D97);
 }
 
 a {

@@ -22,6 +22,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExitIcon from '@material-ui/icons/ExitToApp';
+import Tooltip from 'material-ui-next/Tooltip';
 
 
 const drawerWidth = 240;
@@ -145,7 +146,9 @@ class DashboardPage extends React.Component {
     return (
       <div>
       <Link className={classes.logOut} to="/logout">
-        <ExitIcon color={'#FFF'} hoverColor={'#BBB'}/>
+        <Tooltip id='tooltip-logout' title='Log Out'>
+          <ExitIcon color={'#FFF'} hoverColor={'#003c8f'}/>
+        </Tooltip>
       </Link>
       <Router>
       <div className={classes.root}>
@@ -172,7 +175,7 @@ class DashboardPage extends React.Component {
           classes={{
             paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
           }}
-          open={this.state.open}}
+          open={this.state.open}
         >
           <div className={classes.toolbar}>
             <IconButton onClick={this.handleDrawerClose}>

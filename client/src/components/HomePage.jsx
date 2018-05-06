@@ -20,10 +20,10 @@ const styles = {
     padding: '30px'
   },
   logo: {
-    height: '180px'
+    height: '150px'
   },
   welcomeText: {
-    fontSize: '20px'
+    fontSize: '24px'
   },
   welcomeBtn: {
     margin: '20px 10px'

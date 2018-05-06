@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import Tooltip from 'material-ui-next/Tooltip';
 
 export default class Sidebar extends React.Component {
 

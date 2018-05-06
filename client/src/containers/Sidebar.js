@@ -13,24 +13,18 @@ import StorageIcon from '@material-ui/icons/Storage';
 import EmailIcon from '@material-ui/icons/Email';
 import HelpIcon from '@material-ui/icons/Help';
 
-const styles = {
-  activeBtn: {
-    borderLeft: '2px solid red'
-  }
-}
-
 export const newMissionItems = (
   <div>
-    <ListItem button>
-      <Link to='/new'>
-        <ListItemIcon>
-          <AddIcon />
-        </ListItemIcon>
-      </Link>
-      <Link to='/new'>
-        <ListItemText primary="&nbsp;&nbsp;&nbsp;&nbsp;New Mission" />
-      </Link>
-    </ListItem>
+      <ListItem button>
+        <Link to='/new'>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+        </Link>
+        <Link to='/new'>
+          <ListItemText primary="&nbsp;&nbsp;&nbsp;&nbsp;New Mission" />
+        </Link>
+      </ListItem>
   </div>
 )
 

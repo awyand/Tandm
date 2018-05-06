@@ -40,24 +40,6 @@ export default class Phone extends React.Component {
     this.handleOsChange = this.handleOsChange.bind(this);
   }
 
-  // componentWillReceiveProps(newProps) {
-  //   if (newProps.savedState) {
-  //     this.setState({
-  //       name: newProps.savedState.name,
-  //       apps: newProps.savedState.apps,
-  //       networks: newProps.savedState.networks,
-  //       osVersion: newProps.savedState.osVersion
-  //     });
-  //   } else {
-  //     this.setState({
-  //       name: newProps.name,
-  //       apps: [],
-  //       networks: [],
-  //       osVersion: ''
-  //     });
-  //   }
-  // }
-
   // App click handler
   handleAppClick = event => {
     const clickedIcon = event.target.id;
@@ -89,7 +71,7 @@ export default class Phone extends React.Component {
   }
 
   savePhoneState = event => {
-
+    event.preventDefault();
     // Validation
     if (this.state.apps.length < 1) {
       console.log('Please select at least one app');

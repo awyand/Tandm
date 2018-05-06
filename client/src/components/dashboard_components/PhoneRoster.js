@@ -45,11 +45,18 @@ export default class PhoneRoster extends React.Component {
   setPhoneStatuses() {
     let phoneStatus = [];
     for (let i = 1; i <= this.state.numPhones; i++) {
-      phoneStatus.push('red');
+      if (this.props.savedPhones && this.props.savedPhones.includes(`Phone-${i}`)) {
+        phoneStatus.push('green');
+      } else {
+        phoneStatus.push('red')
+      }
     }
-    this.setState({
-      phoneStatus: phoneStatus
-    });
+
+    setTimeout(() => {
+      this.setState({
+        phoneStatus: phoneStatus
+      });
+    }, 1);
   }
 
   render() {

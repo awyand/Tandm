@@ -15,7 +15,7 @@ const styles = {
     padding: '30px'
   },
   logo: {
-    height: '180px'
+    height: '150px'
   },
   floatingLabelFocusStyle: {
     color: '#5e91f2'
