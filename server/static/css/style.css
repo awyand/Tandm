@@ -1,3 +1,4 @@
+/* General */
 * {
   box-sizing: border-box;
 }
@@ -6,27 +7,23 @@ body {
   margin: 0;
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
+  /* background-image: linear-gradient(-90deg, #0068B8, #0A205C); */
+  background-image: linear-gradient(-90deg, #1AA4F9, #1B3A7E);
 }
 
 a {
-  color: #00bcd4;
+  color: #5e91f2;
   font-weight: bold;
   text-decoration: none;
   transition: color 0.4s;
 }
 
 a:hover {
-  color: #1976d2;
+  color: #1564bf;
 }
 
 .text-center {
   text-align: center;
-}
-
-.container {
-  margin: 100px auto 0 auto;
-  text-align: center;
-  width: 90%;
 }
 
 button > span, a > span {
@@ -34,11 +31,12 @@ button > span, a > span {
 }
 
 .card-heading {
-  padding: 16px;
+  padding: 6px;
+  margin: 10px auto 0 auto;
 }
 
-.field-line, .button-line {
-  padding: 16px;
+.button-line {
+  padding: 6px;
 }
 
 .error-message {
@@ -54,3 +52,14 @@ button > span, a > span {
 .hover-pointer:hover {
   cursor: pointer;
 }
+
+.container {
+  margin: 100px auto 0 auto;
+  text-align: center;
+  width: 90%;
+}
+
+/* input[name="username"],
+input[name="password"] {
+  margin: 100px;
+} */

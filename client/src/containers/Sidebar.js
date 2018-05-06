@@ -13,6 +13,11 @@ import StorageIcon from '@material-ui/icons/Storage';
 import EmailIcon from '@material-ui/icons/Email';
 import HelpIcon from '@material-ui/icons/Help';
 
+const styles = {
+  activeBtn: {
+    borderLeft: '2px solid red'
+  }
+}
 
 export const newMissionItems = (
   <div>

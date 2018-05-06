@@ -47,6 +47,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: '#1564bf'
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -171,7 +172,7 @@ class DashboardPage extends React.Component {
           classes={{
             paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
           }}
-          open={this.state.open}
+          open={this.state.open}}
         >
           <div className={classes.toolbar}>
             <IconButton onClick={this.handleDrawerClose}>

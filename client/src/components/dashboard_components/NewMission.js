@@ -96,18 +96,24 @@ export default class NewMission extends React.Component {
   // Roster click handler
   handleRosterPhoneClick = event => {
 
+    const phoneName = event.target.name;
     // Check to see if phone is already in phone array
-    let match = this.state.missionData.phones.find(phone => phone.name === event.target.name);
+    const match = this.state.missionData.phones.find(phone => phone.name === event.target.name);
 
     this.setState({
-      activePhoneSavedState: match,
-      activePhone: event.target.id,
+      activePhoneSavedState: match
     });
+
+    this.setState({
+      activePhone: event.target.name
+    });
+
+
   }
 
   // Handle save phone click handler
   handleSavePhone = newPhone => {
-    let match = this.state.missionData.phones.find(phone => phone.name === newPhone.name);
+    const match = this.state.missionData.phones.find(phone => phone.name === newPhone.name);
 
     if (match) {
       const matchedIndex = this.state.missionData.phones.indexOf(match);

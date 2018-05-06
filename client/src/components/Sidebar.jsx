@@ -12,6 +12,7 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <Drawer open={this.state.open}>

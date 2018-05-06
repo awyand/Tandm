@@ -28,8 +28,7 @@ export default class Phone extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = this.props.savedState ||
-      {
+    this.state = this.props.savedState || {
         name: this.props.name,
         networks: [],
         apps: [],
@@ -41,23 +40,23 @@ export default class Phone extends React.Component {
     this.handleOsChange = this.handleOsChange.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.savedState) {
-      this.setState({
-        name: newProps.savedState.name,
-        apps: newProps.savedState.apps,
-        networks: newProps.savedState.networks,
-        osVersion: newProps.savedState.osVersion
-      });
-    } else {
-      this.setState({
-        name: newProps.name,
-        apps: [],
-        networks: [],
-        osVersion: ''
-      });
-    }
-  }
+  // componentWillReceiveProps(newProps) {
+  //   if (newProps.savedState) {
+  //     this.setState({
+  //       name: newProps.savedState.name,
+  //       apps: newProps.savedState.apps,
+  //       networks: newProps.savedState.networks,
+  //       osVersion: newProps.savedState.osVersion
+  //     });
+  //   } else {
+  //     this.setState({
+  //       name: newProps.name,
+  //       apps: [],
+  //       networks: [],
+  //       osVersion: ''
+  //     });
+  //   }
+  // }
 
   // App click handler
   handleAppClick = event => {

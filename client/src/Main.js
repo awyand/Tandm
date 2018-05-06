@@ -32,7 +32,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       }}/>
     )
   )}/>
-)
+);
 
 // LoggedOutRoute component (will be rendered if user logs out)
 const LoggedOutRoute = ({ component: Component, ...rest }) => (
@@ -46,14 +46,15 @@ const LoggedOutRoute = ({ component: Component, ...rest }) => (
       <Component {...props} {...rest} />
     )
   )}/>
-)
+);
 
 // PropsRoute component
 const PropsRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     <Component {...props} {...rest} />
   )}/>
-)
+);
+
 
 // Main component
 class Main extends Component {
@@ -77,17 +78,17 @@ class Main extends Component {
   render() {
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <Router>
-          <div>
-            <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
-            <PrivateRoute path="/dashboard" component={DashboardPage}/>
-            <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
-            <LoggedOutRoute path="/signup" component={SignUpPage}/>
-            <Route path="/logout" component={LogoutFunction}/>
-          </div>
-        </Router>
-      </MuiThemeProvider>
+        <MuiThemeProvider muiTheme={getMuiTheme()}>
+          <Router>
+            <div>
+              <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+              <PrivateRoute path="/dashboard" component={DashboardPage}/>
+              <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+              <LoggedOutRoute path="/signup" component={SignUpPage}/>
+              <Route path="/logout" component={LogoutFunction}/>
+            </div>
+          </Router>
+        </MuiThemeProvider>
     );
   }
 }
