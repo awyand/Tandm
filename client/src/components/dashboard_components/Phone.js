@@ -6,6 +6,7 @@ import { FormControl, FormGroup, FormControlLabel } from 'material-ui-next/Form'
 import Input, { InputLabel } from 'material-ui-next/Input';
 import Select from 'material-ui-next/Select';
 import { MenuItem } from 'material-ui-next/Menu';
+import Tooltip from 'material-ui-next/Tooltip';
 
 const styles = {
   svgStyle: {
@@ -309,14 +310,22 @@ export default class Phone extends React.Component {
         </Select>
       </FormControl>
 
-      <Button variant="raised"
-              color="primary"
-              key={this.props.name}
-              name={this.props.name}
-              onClick={this.savePhoneState}>
-        Save Phone
-      </Button>
-
+      <Tooltip id='tooltip-savePhone'
+               title={this.state.apps && this.state.apps.length > 0 && this.state.networks && this.state.networks.length > 0 && this.state.osVersion ? 'Ready to save!' : 'Please select at least 1 app, 1 network, and an OS version.'}
+               placement='right'
+               PopperProps={{ style: { pointerEvents: 'none' } }}
+       >
+        <div style={{zIndex: '99'}}>
+          <Button variant="raised"
+                  color="primary"
+                  key={this.props.name}
+                  name={this.props.name}
+                  onClick={this.savePhoneState}
+                  disabled={this.state.apps && this.state.apps.length > 0 && this.state.networks && this.state.networks.length > 0 && this.state.osVersion ? false : true}>
+            Save Phone
+          </Button>
+        </div>
+      </Tooltip>
     </div>
     )
   }

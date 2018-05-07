@@ -29,6 +29,8 @@ button > span, a > span {
     pointer-events: none;
 }
 
+
+
 .card-heading {
   padding: 6px;
   margin: 10px auto 0 auto;
@@ -57,8 +59,3 @@ button > span, a > span {
   text-align: center;
   width: 90%;
 }
-
-/* input[name="username"],
-input[name="password"] {
-  margin: 100px;
-} */

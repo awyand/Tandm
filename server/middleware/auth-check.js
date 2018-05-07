@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
 
   // Get the last part from a authorization header string like "bearer token-value"
   const token = req.headers.authorization.split(' ')[1];
+  console.log(token);
 
   // Decode the token using a secret key-phrase
   return jwt.verify(token, config.jwtSecret, (err, decoded) => {

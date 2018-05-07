@@ -259,7 +259,7 @@ export default class NewMission extends React.Component {
                 <br />
 
                 <Tooltip id='tooltip-addMission'
-                         title={this.state.isReadyToSave ? 'Ready to save!' : 'Please save all phones'}
+                         title={this.state.isReadyToSave ? 'Ready to save!' : 'Please save all phones.'}
                          placement='right'>
                   <div>
                     <Button
