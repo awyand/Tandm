@@ -11,6 +11,21 @@ import Tooltip from 'material-ui-next/Tooltip';
 const styles = {
   svgStyle: {
     enableBackground:'new 0 0 101.001 101.001',
+    margin: '10px auto',
+    textAlign: 'center',
+    width: '100%'
+  },
+  addPhoneBtn: {
+    textAlign: 'center',
+    margin: '10px auto',
+    padding: '10px'
+  },
+  osSelect: {
+    margin: '0 auto',
+    width: '160px',
+  },
+  osSelectDiv: {
+    textAlign: 'center',
     margin: '0 auto'
   }
 }
@@ -99,8 +114,8 @@ export default class Phone extends React.Component {
 
       <div>
 
-      <svg version="1.1" id="Capa_1" x="0px" y="0px" width="512px"
-           height="512px" viewBox="0 0 101.001 101.001"
+      <svg version="1.1" id="phoneSvg" x="0px" y="0px" width="400px"
+           height="400px" viewBox="0 0 101.001 101.001"
            style={styles.svgStyle}>
 
         <path d="M66.132,0H34.87c-5.692,0-10.306,4.614-10.306,10.307v80.387c0,
@@ -289,33 +304,39 @@ export default class Phone extends React.Component {
 
       </svg>
 
-      <FormControl>
-        <InputLabel htmlFor="osVersion">OS Version</InputLabel>
+      <br />
 
-        <Select
-          value={this.state.osVersion}
-          onChange={this.handleOsChange}
-          placeholder='Oreo'
-          input={<Input id='osVersion' />}
-        >
+      <div style={styles.osSelectDiv}>
+        <FormControl style={styles.osSelect}>
+          <InputLabel htmlFor="osVersion">OS Version</InputLabel>
 
-          {osOptions.map(osOption => (
-            <MenuItem key={osOption}
-                      value={osOption}
-            >
-              {osOption}
-            </MenuItem>
-          ))}
+          <Select
+            value={this.state.osVersion}
+            onChange={this.handleOsChange}
+            placeholder='Oreo'
+            input={<Input id='osVersion' />}
+          >
 
-        </Select>
-      </FormControl>
+            {osOptions.map(osOption => (
+              <MenuItem key={osOption}
+                        value={osOption}
+              >
+                {osOption}
+              </MenuItem>
+            ))}
+
+          </Select>
+        </FormControl>
+      </div>
+
+      <br />
 
       <Tooltip id='tooltip-savePhone'
                title={this.state.apps && this.state.apps.length > 0 && this.state.networks && this.state.networks.length > 0 && this.state.osVersion ? 'Ready to save!' : 'Please select at least 1 app, 1 network, and an OS version.'}
-               placement='right'
+               placement='top'
                PopperProps={{ style: { pointerEvents: 'none' } }}
        >
-        <div style={{zIndex: '99'}}>
+        <div style={styles.addPhoneBtn}>
           <Button variant="raised"
                   color="primary"
                   key={this.props.name}

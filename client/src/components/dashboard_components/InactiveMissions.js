@@ -78,6 +78,7 @@ export default class InactiveMissions extends React.Component {
             <TableHead>
               <TableRow>
                 <TableCell>Mission Name</TableCell>
+                <TableCell>Location</TableCell>
                 <TableCell>Date Added</TableCell>
                 <TableCell># Phones</TableCell>
                 <TableCell>Actions</TableCell>
@@ -88,6 +89,7 @@ export default class InactiveMissions extends React.Component {
                 return (
                   <TableRow key={mission._id}>
                     <TableCell>{mission.name}</TableCell>
+                    <TableCell>{mission.location}</TableCell>
                     <TableCell>{mission.dateAdded}</TableCell>
                     <TableCell>{mission.phones.length}</TableCell>
                     <TableCell>

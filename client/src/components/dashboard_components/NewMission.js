@@ -20,15 +20,19 @@ import { MenuItem } from 'material-ui-next/Menu';
 import Button from 'material-ui-next/Button';
 import Checkbox from 'material-ui-next/Checkbox';
 import Tooltip from 'material-ui-next/Tooltip';
+import Snackbar from 'material-ui-next/Snackbar';
+import IconButton from 'material-ui-next/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 // Styles
 const styles = {
   newMissionContainer: {
     width: '90%',
-    marginTop: '100px'
+    margin: '80px auto 0 auto'
   },
   missionInfoAndRosterContainer: {
-    width: '45%',
+    width: '40%',
+    height: '100%',
     float: 'left'
   },
   missionInfoCard: {
@@ -37,15 +41,21 @@ const styles = {
     width: '100%'
   },
   missionField: {
-    margin: '5px auto'
+    margin: '10px auto'
   },
   phoneRosterCard: {
     width: '100%',
     marginTop: '30px',
-    textAlign: 'center'
+    textAlign: 'center',
+    height: '240px'
   },
   phoneConfigContainer: {
-    marginLeft: '10px'
+    marginLeft: '45%'
+  },
+  phoneCard: {
+    width: '100%',
+    textAlign: 'center',
+    margin: '0 auto'
   }
 }
 
@@ -66,7 +76,9 @@ export default class NewMission extends React.Component {
       activePhone: '',
       activePhoneSavedState: {},
       savedPhones: [],
-      isReadyToSave: false
+      isReadyToSave: false,
+      snackbarOpen: false,
+      snackbarText: ''
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -76,6 +88,8 @@ export default class NewMission extends React.Component {
     this.handleRosterPhoneClick = this.handleRosterPhoneClick.bind(this);
     this.handleSavePhone = this.handleSavePhone.bind(this);
     this.handleAddMission = this.handleAddMission.bind(this);
+    this.handleSnackbarOpen = this.handleSnackbarOpen.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
   }
 
   // Mission Information box change handlers
@@ -155,6 +169,17 @@ export default class NewMission extends React.Component {
   handleAddMission = event => {
     event.preventDefault();
 
+    // Mission info validation
+    if (this.state.missionData.name === '') {
+      this.setState({ snackbarText: 'Please enter a mission name'});
+      setTimeout(() => this.handleSnackbarOpen(), 1);
+      return;
+    } else if (this.state.missionData.location === '') {
+      this.setState({ snackbarText: 'Please enter a location'});
+      setTimeout(() => this.handleSnackbarOpen(), 1);
+      return;
+    }
+
     API.addMission(this.props.userId, this.state.missionData)
     .then(res => {
       console.log('API response:');
@@ -165,6 +190,18 @@ export default class NewMission extends React.Component {
       });
     })
     .catch(err => console.log(err));
+  }
+
+  handleSnackbarOpen = () => {
+    this.setState({ snackbarOpen: true });
+  }
+
+  handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ snackbarOpen: false });
   }
 
 
@@ -197,7 +234,7 @@ export default class NewMission extends React.Component {
                 label='Mission Name'
                 value={this.state.missionData.name}
                 onChange={this.handleNameChange}
-                placeholder='Op Midnight'
+                placeholder='Op Fury'
                 style={styles.missionField}
               />
 
@@ -229,9 +266,25 @@ export default class NewMission extends React.Component {
                   <MenuItem value={2}>2</MenuItem>
                   <MenuItem value={3}>3</MenuItem>
                   <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
                 </Select>
               </FormControl>
+
+              <Tooltip id='tooltip-addMission'
+                       title={this.state.isReadyToSave ? 'Ready to save!' : 'Please save all phones.'}
+                       placement='top'>
+                <div>
+                  <Button
+                    variant="raised"
+                    color="primary"
+                    onClick={this.handleAddMission}
+                    disabled={!this.state.isReadyToSave}
+                  >
+                    Add Mission
+                  </Button>
+                </div>
+              </Tooltip>
+
+              <br />
 
               <FormControlLabel
                 control={
@@ -256,23 +309,6 @@ export default class NewMission extends React.Component {
                              savedPhones={this.state.savedPhones}
                 />
 
-                <br />
-
-                <Tooltip id='tooltip-addMission'
-                         title={this.state.isReadyToSave ? 'Ready to save!' : 'Please save all phones.'}
-                         placement='right'>
-                  <div>
-                    <Button
-                      variant="raised"
-                      color="primary"
-                      onClick={this.handleAddMission}
-                      disabled={!this.state.isReadyToSave}
-                    >
-                      Add Mission
-                    </Button>
-                  </div>
-                </Tooltip>
-
               </Card>
           }
 
@@ -287,10 +323,37 @@ export default class NewMission extends React.Component {
                        handleSavePhone={this.handleSavePhone}
                        savedState={this.state.activePhoneSavedState}
                        key={this.state.activePhone}
+                       style={styles.phoneCard}
                 />
               </Card>
           }
         </div>
+
+        <div>
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            open={this.state.snackbarOpen}
+            autoHideDuration={6000}
+            onClose={this.handleSnackbarClose}
+            ContentProps={{
+              'aria-describedby': 'snack-message-id',
+            }}
+            message={<span id="snack-message-id">{this.state.snackbarText}</span>}
+            action={[
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={this.handleSnackbarClose}
+              >
+                <CloseIcon />
+              </IconButton>,
+            ]}
+          />
+      </div>
 
 
     </div>
