@@ -23,7 +23,7 @@ const Dashboard = ({ user }) => (
       <Route exact path='/new' render={() => <NewMission userId={user._id} />} />
       <Route exact path='/inactive' render={() => <InactiveMissions userId={user._id}/>} />
       <Route exact path='/active' render={() => <ActiveMissions userId={user._id} />} />
-      <Route exact path='/reports' component={Reports} />
+      <Route exact path='/reports' render={() => <Reports userId={user._id} />} />
       <Route exact path='/map' component={Mapper} />
       <Route exact path='/inventory' component={Inventory} />
       <Route exact path='/contact' component={Contact} />

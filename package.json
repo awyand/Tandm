@@ -15,6 +15,7 @@
     "axios": "^0.16.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
+    "chart.js": "^2.7.2",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
     "material-ui": "^0.20.0",
