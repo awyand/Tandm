@@ -1,9 +1,12 @@
 import React from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
+import Avatar from 'material-ui-next/Avatar';
+import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 const styles = {
   welcomeContainer: {
-    width: '90%',
+    width: '60%',
     margin: '100px auto 0 auto',
     textAlign: 'center'
   }
@@ -11,12 +14,14 @@ const styles = {
 
 const Welcome = (props) => (
   <Card style={styles.welcomeContainer}>
-    <CardTitle title="Welcome to Tandm" />
-  {props.user &&
-    <CardText>
-      <h2>Welcome <strong>{props.user.username}</strong>!</h2>
-      <p>Use the sidebar to navigate the Dashboard</p>
-    </CardText>}
+    {props.user &&
+      <CardText>
+        <img src='images/tandm-logo.png' />
+        <h2>Weclome to Tandm</h2>
+        <h3>Welcome <strong>{props.user.username}</strong>!</h3>
+        <p>Use the sidebar to navigate the Dashboard {props.user}</p>
+
+      </CardText>}
   </Card>
 )
 

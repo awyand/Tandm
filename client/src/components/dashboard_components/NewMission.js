@@ -163,6 +163,10 @@ export default class NewMission extends React.Component {
         isReadyToSave: false
       })
     }
+
+    this.setState({ snackbarText: 'Phone saved.'});
+    setTimeout(() => this.handleSnackbarOpen(), 1);
+
   }
 
   // Submit Mission button click handler
@@ -184,12 +188,18 @@ export default class NewMission extends React.Component {
     .then(res => {
       console.log('API response:');
       console.log(res);
-      // add logic for good status res
-      this.setState({
-        redirect: true
-      });
+
+      this.setState({ snackbarText: 'Mission saved! Redirecting...'});
+      setTimeout(() => this.handleSnackbarOpen(), 1);
+
+      setTimeout(function() { this.setState({redirect: true}); }.bind(this), 2000);
+
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      this.setState({ snackbarText: 'There was an error. See console'});
+      setTimeout(() => this.handleSnackbarOpen(), 1);
+      console.log(err);
+    });
   }
 
   handleSnackbarOpen = () => {
@@ -346,7 +356,6 @@ export default class NewMission extends React.Component {
               <IconButton
                 key="close"
                 aria-label="Close"
-                color="inherit"
                 onClick={this.handleSnackbarClose}
               >
                 <CloseIcon />
