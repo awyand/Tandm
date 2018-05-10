@@ -76,7 +76,7 @@ class SignUpPage extends React.Component {
       user
     });
   }
-  
+
   render() {
     return (
       <SignUpForm

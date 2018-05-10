@@ -6341,7 +6341,7 @@ module.exports = {
 var global    = __webpack_require__(40)
   , core      = __webpack_require__(26)
   , ctx       = __webpack_require__(54)
-  , hide      = __webpack_require__(43)
+  , hide      = __webpack_require__(44)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -6754,33 +6754,6 @@ exports.default = pure;
 
 /***/ }),
 /* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {};
-module.exports.Arc = __webpack_require__(463);
-module.exports.Line = __webpack_require__(464);
-module.exports.Point = __webpack_require__(465);
-module.exports.Rectangle = __webpack_require__(466);
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP         = __webpack_require__(36)
-  , createDesc = __webpack_require__(69);
-module.exports = __webpack_require__(39) ? function(object, key, value){
-  return dP.f(object, key, createDesc(1, value));
-} : function(object, key, value){
-  object[key] = value;
-  return object;
-};
-
-/***/ }),
-/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6837,6 +6810,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {};
+module.exports.Arc = __webpack_require__(463);
+module.exports.Line = __webpack_require__(464);
+module.exports.Point = __webpack_require__(465);
+module.exports.Rectangle = __webpack_require__(466);
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP         = __webpack_require__(36)
+  , createDesc = __webpack_require__(69);
+module.exports = __webpack_require__(39) ? function(object, key, value){
+  return dP.f(object, key, createDesc(1, value));
+} : function(object, key, value){
+  object[key] = value;
+  return object;
+};
 
 /***/ }),
 /* 45 */
@@ -11448,7 +11448,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
 var LIBRARY        = __webpack_require__(115)
   , $export        = __webpack_require__(31)
   , redefine       = __webpack_require__(183)
-  , hide           = __webpack_require__(43)
+  , hide           = __webpack_require__(44)
   , has            = __webpack_require__(48)
   , Iterators      = __webpack_require__(68)
   , $iterCreate    = __webpack_require__(502)
@@ -15888,7 +15888,7 @@ module.exports = function(KEY, exec){
 /* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hide = __webpack_require__(43);
+var hide = __webpack_require__(44);
 module.exports = function(target, src, safe){
   for(var key in src){
     if(safe && target[key])target[key] = src[key];
@@ -15900,7 +15900,7 @@ module.exports = function(target, src, safe){
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(43);
+module.exports = __webpack_require__(44);
 
 /***/ }),
 /* 184 */
@@ -15927,7 +15927,7 @@ module.exports = __webpack_require__(26).getIteratorMethod = function(it){
 
 __webpack_require__(513);
 var global        = __webpack_require__(40)
-  , hide          = __webpack_require__(43)
+  , hide          = __webpack_require__(44)
   , Iterators     = __webpack_require__(68)
   , TO_STRING_TAG = __webpack_require__(32)('toStringTag');
 
@@ -33774,7 +33774,7 @@ var _MuiThemeProvider = __webpack_require__(718);
 
 var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _HomePage = __webpack_require__(408);
 
@@ -35154,7 +35154,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _Card = __webpack_require__(28);
 
@@ -35251,7 +35251,7 @@ var _Auth = __webpack_require__(65);
 
 var _Auth2 = _interopRequireDefault(_Auth);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _Button = __webpack_require__(51);
 
@@ -35419,7 +35419,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _Card = __webpack_require__(28);
 
@@ -35562,7 +35562,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _Card = __webpack_require__(28);
 
@@ -36247,7 +36247,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _API = __webpack_require__(73);
 
@@ -37577,7 +37577,7 @@ var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37605,19 +37605,23 @@ var Welcome = function Welcome(props) {
       _react2.default.createElement(
         'h3',
         null,
-        'Welcome ',
+        'You are logged in as: ',
         _react2.default.createElement(
           'strong',
           null,
           props.user.username
-        ),
-        '!'
+        )
       ),
       _react2.default.createElement(
         'p',
         null,
-        'Use the sidebar to navigate the Dashboard ',
-        props.user
+        'Joined: ',
+        props.user.dateJoined
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Use the sidebar to navigate the Dashboard'
       )
     )
   );
@@ -37644,7 +37648,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _propTypes = __webpack_require__(3);
 
@@ -38227,7 +38231,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _List = __webpack_require__(133);
 
-var _reactRouterDom = __webpack_require__(44);
+var _reactRouterDom = __webpack_require__(42);
 
 var _AddCircleOutline = __webpack_require__(375);
 
@@ -41308,7 +41312,7 @@ __webpack_require__(458)(Chart);
 
 Chart.defaults = __webpack_require__(16);
 Chart.Element = __webpack_require__(38);
-Chart.elements = __webpack_require__(42);
+Chart.elements = __webpack_require__(43);
 Chart.Interaction = __webpack_require__(164);
 Chart.layouts = __webpack_require__(66);
 Chart.platform = __webpack_require__(166);
@@ -41550,7 +41554,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(16);
-var elements = __webpack_require__(42);
+var elements = __webpack_require__(43);
 var helpers = __webpack_require__(12);
 
 defaults._set('bar', {
@@ -42061,7 +42065,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(16);
-var elements = __webpack_require__(42);
+var elements = __webpack_require__(43);
 var helpers = __webpack_require__(12);
 
 defaults._set('bubble', {
@@ -42248,7 +42252,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(16);
-var elements = __webpack_require__(42);
+var elements = __webpack_require__(43);
 var helpers = __webpack_require__(12);
 
 defaults._set('doughnut', {
@@ -42554,7 +42558,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(16);
-var elements = __webpack_require__(42);
+var elements = __webpack_require__(43);
 var helpers = __webpack_require__(12);
 
 defaults._set('line', {
@@ -42894,7 +42898,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(16);
-var elements = __webpack_require__(42);
+var elements = __webpack_require__(43);
 var helpers = __webpack_require__(12);
 
 defaults._set('polarArea', {
@@ -43123,7 +43127,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(16);
-var elements = __webpack_require__(42);
+var elements = __webpack_require__(43);
 var helpers = __webpack_require__(12);
 
 defaults._set('radar', {
@@ -49076,7 +49080,7 @@ module.exports.title = __webpack_require__(475);
 
 
 var defaults = __webpack_require__(16);
-var elements = __webpack_require__(42);
+var elements = __webpack_require__(43);
 var helpers = __webpack_require__(12);
 
 defaults._set('global', {
@@ -53959,7 +53963,7 @@ var global         = __webpack_require__(40)
   , $export        = __webpack_require__(31)
   , meta           = __webpack_require__(116)
   , fails          = __webpack_require__(47)
-  , hide           = __webpack_require__(43)
+  , hide           = __webpack_require__(44)
   , redefineAll    = __webpack_require__(182)
   , forOf          = __webpack_require__(112)
   , anInstance     = __webpack_require__(169)
@@ -54066,7 +54070,7 @@ var create         = __webpack_require__(76)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(43)(IteratorPrototype, __webpack_require__(32)('iterator'), function(){ return this; });
+__webpack_require__(44)(IteratorPrototype, __webpack_require__(32)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -54703,7 +54707,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function(){
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(43)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(44)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]

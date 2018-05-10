@@ -29,7 +29,11 @@ const UserSchema = new mongoose.Schema({
     index: { unique: true }
   },
   password: String,
-  missions: [MissionSchema]
+  missions: [MissionSchema],
+  dateJoined: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
 /**

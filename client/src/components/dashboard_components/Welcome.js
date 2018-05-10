@@ -18,9 +18,9 @@ const Welcome = (props) => (
       <CardText>
         <img src='images/tandm-logo.png' />
         <h2>Weclome to Tandm</h2>
-        <h3>Welcome <strong>{props.user.username}</strong>!</h3>
-        <p>Use the sidebar to navigate the Dashboard {props.user}</p>
-
+        <h3>You are logged in as: <strong>{props.user.username}</strong></h3>
+        <p>Joined: {props.user.dateJoined}</p>
+        <p>Use the sidebar to navigate the Dashboard</p>
       </CardText>}
   </Card>
 )
