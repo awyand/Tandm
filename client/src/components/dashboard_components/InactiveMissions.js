@@ -8,6 +8,7 @@ import API from '../../utils/API.js';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui-next/Table';
 import Button from 'material-ui-next/Button';
+import { withStyles } from 'material-ui-next/styles';
 
 // Component Export
 export default class InactiveMissions extends React.Component {
@@ -15,7 +16,8 @@ export default class InactiveMissions extends React.Component {
     super(props);
 
     this.state = {
-      missions: []
+      missions: [],
+      hover: false
     };
 
     this.handleActivate = this.handleActivate.bind(this);
@@ -64,6 +66,12 @@ export default class InactiveMissions extends React.Component {
     .catch(err => console.log(err));
   }
 
+  toggleHover = () => {
+    this.setState({
+      hover: true
+    });
+  }
+
   render() {
 
     if (this.state.redirect === true) {
@@ -72,28 +80,28 @@ export default class InactiveMissions extends React.Component {
 
     return (
       <Card className="container">
-        <CardTitle title="Inactive Missions" />
+        <CardTitle title="Inactive Missions" style={{fontWeight: 'bold'}} />
 
         <Table>
             <TableHead>
-              <TableRow>
-                <TableCell>Mission Name</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Date Added</TableCell>
-                <TableCell># Phones</TableCell>
-                <TableCell>Actions</TableCell>
+              <TableRow style={{backgroundColor: '#003b8e'}}>
+                <TableCell style={{color: '#FFF', textAlign: 'center'}}>Mission Name</TableCell>
+                <TableCell style={{color: '#FFF', textAlign: 'center'}}>Location</TableCell>
+                <TableCell style={{color: '#FFF', textAlign: 'center'}}>Date Added</TableCell>
+                <TableCell style={{color: '#FFF', textAlign: 'center'}}># Phones</TableCell>
+                <TableCell style={{color: '#FFF', textAlign: 'center'}}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.missions.filter(mission => mission.active === false).map(mission => {
+              {this.state.missions.filter(mission => mission.active === false).map((mission, i) => {
                 return (
-                  <TableRow key={mission._id}>
-                    <TableCell>{mission.name}</TableCell>
-                    <TableCell>{mission.location}</TableCell>
-                    <TableCell>{mission.dateAdded}</TableCell>
-                    <TableCell>{mission.phones.length}</TableCell>
-                    <TableCell>
-                      <Button variant="raised" color="primary" onClick={() => this.handleActivate(mission)}>Activate</Button>
+                  <TableRow key={mission._id} style={{backgroundColor: i % 2 === 0 ? `rgba(21,100,191,0.05)` : 'none'}}>
+                    <TableCell style={{textAlign: 'center'}}>{mission.name}</TableCell>
+                    <TableCell style={{textAlign: 'center'}}>{mission.location}</TableCell>
+                    <TableCell style={{textAlign: 'center'}}>{mission.dateAdded}</TableCell>
+                    <TableCell style={{textAlign: 'center'}}>{mission.phones.length}</TableCell>
+                    <TableCell style={{textAlign: 'center'}}>
+                      <Button variant="raised" style={{marginRight: '4px'}} color="primary" onClick={() => this.handleActivate(mission)}>Activate</Button>
                       <Button variant="raised" color="secondary" onClick={() => this.handleDelete(mission)}>Delete</Button>
                     </TableCell>
                   </TableRow>

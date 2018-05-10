@@ -35718,7 +35718,7 @@ var ActiveMissions = function (_React$Component) {
       return _react2.default.createElement(
         _Card.Card,
         { className: 'container' },
-        _react2.default.createElement(_Card.CardTitle, { title: 'Active Missions' }),
+        _react2.default.createElement(_Card.CardTitle, { title: 'Active Missions', style: { fontWeight: 'bold' } }),
         _react2.default.createElement(
           _Table2.default,
           null,
@@ -35727,30 +35727,30 @@ var ActiveMissions = function (_React$Component) {
             null,
             _react2.default.createElement(
               _Table.TableRow,
-              null,
+              { style: { backgroundColor: '#003b8e' } },
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Mission Name'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Location'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Date Added'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 '# Phones'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Actions'
               )
             )
@@ -35760,38 +35760,38 @@ var ActiveMissions = function (_React$Component) {
             null,
             this.state.missions.filter(function (mission) {
               return mission.active === true;
-            }).map(function (mission) {
+            }).map(function (mission, i) {
               return _react2.default.createElement(
                 _Table.TableRow,
-                { key: mission._id },
+                { key: mission._id, style: { backgroundColor: i % 2 === 0 ? 'rgba(21,100,191,0.05)' : 'none' } },
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.name
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.location
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.dateAdded
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.phones.length
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   _react2.default.createElement(
                     _Button2.default,
                     {
                       variant: 'raised',
-                      color: 'primary',
+                      color: 'secondary',
                       onClick: function onClick() {
                         return _this3.handleDeactivate(mission);
                       }
@@ -35901,6 +35901,8 @@ var _Button = __webpack_require__(51);
 
 var _Button2 = _interopRequireDefault(_Button);
 
+var _styles = __webpack_require__(681);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35952,8 +35954,15 @@ var InactiveMissions = function (_React$Component) {
       });
     };
 
+    _this.toggleHover = function () {
+      _this.setState({
+        hover: true
+      });
+    };
+
     _this.state = {
-      missions: []
+      missions: [],
+      hover: false
     };
 
     _this.handleActivate = _this.handleActivate.bind(_this);
@@ -35993,7 +36002,7 @@ var InactiveMissions = function (_React$Component) {
       return _react2.default.createElement(
         _Card.Card,
         { className: 'container' },
-        _react2.default.createElement(_Card.CardTitle, { title: 'Inactive Missions' }),
+        _react2.default.createElement(_Card.CardTitle, { title: 'Inactive Missions', style: { fontWeight: 'bold' } }),
         _react2.default.createElement(
           _Table2.default,
           null,
@@ -36002,30 +36011,30 @@ var InactiveMissions = function (_React$Component) {
             null,
             _react2.default.createElement(
               _Table.TableRow,
-              null,
+              { style: { backgroundColor: '#003b8e' } },
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Mission Name'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Location'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Date Added'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 '# Phones'
               ),
               _react2.default.createElement(
                 _Table.TableCell,
-                null,
+                { style: { color: '#FFF', textAlign: 'center' } },
                 'Actions'
               )
             )
@@ -36035,36 +36044,36 @@ var InactiveMissions = function (_React$Component) {
             null,
             this.state.missions.filter(function (mission) {
               return mission.active === false;
-            }).map(function (mission) {
+            }).map(function (mission, i) {
               return _react2.default.createElement(
                 _Table.TableRow,
-                { key: mission._id },
+                { key: mission._id, style: { backgroundColor: i % 2 === 0 ? 'rgba(21,100,191,0.05)' : 'none' } },
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.name
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.location
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.dateAdded
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   mission.phones.length
                 ),
                 _react2.default.createElement(
                   _Table.TableCell,
-                  null,
+                  { style: { textAlign: 'center' } },
                   _react2.default.createElement(
                     _Button2.default,
-                    { variant: 'raised', color: 'primary', onClick: function onClick() {
+                    { variant: 'raised', style: { marginRight: '4px' }, color: 'primary', onClick: function onClick() {
                         return _this3.handleActivate(mission);
                       } },
                     'Activate'
