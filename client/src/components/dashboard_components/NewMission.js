@@ -78,7 +78,8 @@ export default class NewMission extends React.Component {
       savedPhones: [],
       isReadyToSave: false,
       snackbarOpen: false,
-      snackbarText: ''
+      snackbarText: '',
+      inventory: this.props.user.inventory
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -134,39 +135,73 @@ export default class NewMission extends React.Component {
 
   // Handle save phone click handler
   handleSavePhone = newPhone => {
-    const match = this.state.missionData.phones.find(phone => phone.name === newPhone.name);
+    // Query database to see if there is at least 1 phone with that OS available ***
+    let osIndex = null;
+    switch(newPhone.osVersion) {
+      case 'Android P':
+        osIndex = 0;
+        break;
+      case 'Oreo':
+        osIndex = 1;
+        break;
+      case 'Nougat':
+        osIndex = 2;
+        break;
+      case 'Marshmallow':
+        osIndex = 3;
+        break;
+      case 'Lollipop':
+        osIndex = 4;
+        break;
+      case 'KitKat':
+        osIndex = 5;
+        break;
+    }
 
-    if (match) {
-      const matchedIndex = this.state.missionData.phones.indexOf(match);
-      this.state.missionData.phones[matchedIndex] = newPhone;
+    if (this.state.inventory[osIndex] < 1) {
+      this.setState({ snackbarText: `Insufficient ${newPhone.osVersion} stock. Please add more on inventory page or pick another OS.`});
+      setTimeout(() => this.handleSnackbarOpen(), 1);
     } else {
-      const updatedPhonesArray = this.state.missionData.phones.concat(newPhone);
+      // Decrement state view of phone inventory (database only updated on mission save)
+      let newInventory = this.state.inventory;
+      newInventory[osIndex] = this.state.inventory[osIndex] - 1;
       this.setState({
-        missionData: { ...this.state.missionData, phones: updatedPhonesArray}
+        inventory: newInventory
       });
+
+      const match = this.state.missionData.phones.find(phone => phone.name === newPhone.name);
+
+      if (match) {
+        const matchedIndex = this.state.missionData.phones.indexOf(match);
+        this.state.missionData.phones[matchedIndex] = newPhone;
+      } else {
+        const updatedPhonesArray = this.state.missionData.phones.concat(newPhone);
+        this.setState({
+          missionData: { ...this.state.missionData, phones: updatedPhonesArray}
+        });
+      }
+
+      // Add phone to savedPhones array if it's not already there
+      if (this.state.savedPhones && !this.state.savedPhones.includes(newPhone.name)) {
+        this.setState({
+          savedPhones: this.state.savedPhones.concat(newPhone.name)
+        })
+      }
+
+      // Check to see if all phones have been saved
+      if (this.state.savedPhones && this.state.savedPhones.length === this.state.missionData.numPhones) {
+        this.setState({
+          isReadyToSave: true
+        });
+      } else {
+        this.setState({
+          isReadyToSave: false
+        })
+      }
+
+      this.setState({ snackbarText: 'Phone saved.'});
+      setTimeout(() => this.handleSnackbarOpen(), 1);
     }
-
-    // Add phone to savedPhones array if it's not already there
-    if (this.state.savedPhones && !this.state.savedPhones.includes(newPhone.name)) {
-      this.setState({
-        savedPhones: this.state.savedPhones.concat(newPhone.name)
-      })
-    }
-
-    // Check to see if all phones have been saved
-    if (this.state.savedPhones && this.state.savedPhones.length === this.state.missionData.numPhones) {
-      this.setState({
-        isReadyToSave: true
-      });
-    } else {
-      this.setState({
-        isReadyToSave: false
-      })
-    }
-
-    this.setState({ snackbarText: 'Phone saved.'});
-    setTimeout(() => this.handleSnackbarOpen(), 1);
-
   }
 
   // Submit Mission button click handler
@@ -184,37 +219,48 @@ export default class NewMission extends React.Component {
       return;
     }
 
+    // Call API to add mission to database
     API.addMission(this.props.userId, this.state.missionData)
     .then(res => {
       console.log('API response:');
       console.log(res);
 
-      this.setState({ snackbarText: 'Mission saved! Redirecting...'});
-      setTimeout(() => this.handleSnackbarOpen(), 1);
+      // If API response is OK, update database with decreased inventory values
+      API.decreaseInventory(this.props.userId, this.state.inventory)
+      .then(res => {
+        console.log(res);
+        // Alert user that mission was successfully saved
+        this.setState({ snackbarText: 'Mission saved! Redirecting...'});
+        setTimeout(() => this.handleSnackbarOpen(), 1);
 
-      setTimeout(function() { this.setState({redirect: true}); }.bind(this), 2000);
-
+        // Redirect user to appropriate mission page
+        setTimeout(function() { this.setState({redirect: true}); }.bind(this), 2000);
+      })
+      .catch(err => {
+        // Error handling for decreaseInventory API call
+        this.setState({ snackbarText: 'There was an error. See console'});
+        setTimeout(() => this.handleSnackbarOpen(), 1);
+        console.log(err);
+      });
     })
     .catch(err => {
+      // Error handling for addMission API call
       this.setState({ snackbarText: 'There was an error. See console'});
       setTimeout(() => this.handleSnackbarOpen(), 1);
       console.log(err);
     });
   }
 
+  // Snackbar open/close handling
   handleSnackbarOpen = () => {
     this.setState({ snackbarOpen: true });
   }
-
   handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     this.setState({ snackbarOpen: false });
   }
-
-
 
   render() {
 

@@ -9085,6 +9085,21 @@ exports.default = {
     return _axios2.default.get('/api/' + userId);
   },
 
+  getInventory: function getInventory(userId) {
+    _axios2.default.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;
+    return _axios2.default.get('/api/inventory/' + userId);
+  },
+
+  addInventory: function addInventory(userId, osIndex) {
+    _axios2.default.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;
+    return _axios2.default.put('/api/inventory/' + userId + '/' + osIndex);
+  },
+
+  decreaseInventory: function decreaseInventory(userId, newInventory) {
+    _axios2.default.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;
+    return _axios2.default.put('/api/decrease/' + userId, { newInventory: newInventory });
+  },
+
   // Post new mission to database by userID and missionData object
   addMission: function addMission(userId, missionData) {
     _axios2.default.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;
@@ -35207,7 +35222,7 @@ var Dashboard = function Dashboard(_ref) {
         return _react2.default.createElement(_Welcome2.default, { user: user });
       } }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/new', render: function render() {
-        return _react2.default.createElement(_NewMission2.default, { userId: user._id });
+        return _react2.default.createElement(_NewMission2.default, { userId: user._id, user: user });
       } }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/inactive', render: function render() {
         return _react2.default.createElement(_InactiveMissions2.default, { userId: user._id });
@@ -35219,7 +35234,9 @@ var Dashboard = function Dashboard(_ref) {
         return _react2.default.createElement(_Reports2.default, { userId: user._id });
       } }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/map', component: _Mapper2.default }),
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/inventory', component: _Inventory2.default }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/inventory', render: function render() {
+        return _react2.default.createElement(_Inventory2.default, { userId: user._id });
+      } }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/contact', component: _Contact2.default }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/help', component: _Help2.default })
   );
@@ -36177,21 +36194,300 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _API = __webpack_require__(73);
+
+var _API2 = _interopRequireDefault(_API);
+
 var _Card = __webpack_require__(28);
+
+var _Table = __webpack_require__(217);
+
+var _Table2 = _interopRequireDefault(_Table);
+
+var _Button = __webpack_require__(51);
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _styles = __webpack_require__(224);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Inventory = function Inventory() {
-  return _react2.default.createElement(
-    _Card.Card,
-    { className: 'container' },
-    _react2.default.createElement(_Card.CardTitle, { title: 'Inventory' })
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Dependencies
+
+
+// Project Files
+
+
+// Material-UI Components
+
+
+// Component Export
+var Inventory = function (_React$Component) {
+  _inherits(Inventory, _React$Component);
+
+  function Inventory(props) {
+    _classCallCheck(this, Inventory);
+
+    var _this = _possibleConstructorReturn(this, (Inventory.__proto__ || Object.getPrototypeOf(Inventory)).call(this, props));
+
+    _this.handlePurhcase = function (osIndex) {
+      event.preventDefault();
+      _API2.default.addInventory(_this.props.userId, osIndex).then(function (res) {
+        _this.setState({
+          AndroidP: res.data.inventory.inventory[0],
+          Oreo: res.data.inventory.inventory[1],
+          Nougat: res.data.inventory.inventory[2],
+          Marshmallow: res.data.inventory.inventory[3],
+          Lollipop: res.data.inventory.inventory[4],
+          KitKat: res.data.inventory.inventory[5]
+        });
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    };
+
+    _this.state = {
+      AndroidP: 0,
+      Oreo: 0,
+      Nougat: 0,
+      Marshmallow: 0,
+      Lollipop: 0,
+      KitKat: 0
+    };
+
+    _this.handlePurhcase = _this.handlePurhcase.bind(_this);
+    return _this;
+  }
+
+  // When InactiveMissions component mounts
+
+
+  _createClass(Inventory, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // Call API getMissions methods and pass userId
+      _API2.default.getInventory(this.props.userId).then(function (res) {
+        // Push inventory object from API response to state
+        _this2.setState({
+          AndroidP: res.data.inventory[0],
+          Oreo: res.data.inventory[1],
+          Nougat: res.data.inventory[2],
+          Marshmallow: res.data.inventory[3],
+          Lollipop: res.data.inventory[4],
+          KitKat: res.data.inventory[5]
+        });
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      return _react2.default.createElement(
+        _Card.Card,
+        { className: 'container' },
+        _react2.default.createElement(_Card.CardTitle, { title: 'Inventory', style: { fontWeight: 'bold' } }),
+        _react2.default.createElement(
+          _Table2.default,
+          null,
+          _react2.default.createElement(
+            _Table.TableHead,
+            null,
+            _react2.default.createElement(
+              _Table.TableRow,
+              { style: { backgroundColor: '#003b8e' } },
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { color: '#FFF', textAlign: 'center' } },
+                'OS Version'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { color: '#FFF', textAlign: 'center' } },
+                'Phones in Stock'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { color: '#FFF', textAlign: 'center' } },
+                'Order 10 More'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _Table.TableBody,
+            null,
+            _react2.default.createElement(
+              _Table.TableRow,
+              { style: { backgroundColor: 'none' } },
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                'Android P'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                this.state.AndroidP
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                _react2.default.createElement(
+                  _Button2.default,
+                  { variant: 'raised', color: 'primary', onClick: function onClick() {
+                      return _this3.handlePurhcase(0);
+                    } },
+                  'Order'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _Table.TableRow,
+              { style: { backgroundColor: 'rgba(21,100,191,0.05)' } },
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                'Oreo'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                this.state.Oreo
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                _react2.default.createElement(
+                  _Button2.default,
+                  { variant: 'raised', color: 'primary', onClick: function onClick() {
+                      return _this3.handlePurhcase(1);
+                    } },
+                  'Order'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _Table.TableRow,
+              { style: { backgroundColor: 'none' } },
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                'Nougat'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                this.state.Nougat
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                _react2.default.createElement(
+                  _Button2.default,
+                  { variant: 'raised', color: 'primary', onClick: function onClick() {
+                      return _this3.handlePurhcase(2);
+                    } },
+                  'Order'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _Table.TableRow,
+              { style: { backgroundColor: 'rgba(21,100,191,0.05)' } },
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                'Marshmallow'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                this.state.Marshmallow
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                _react2.default.createElement(
+                  _Button2.default,
+                  { variant: 'raised', color: 'primary', onClick: function onClick() {
+                      return _this3.handlePurhcase(3);
+                    } },
+                  'Order'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _Table.TableRow,
+              { style: { backgroundColor: 'none' } },
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                'Lollipop'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                this.state.Lollipop
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                _react2.default.createElement(
+                  _Button2.default,
+                  { variant: 'raised', color: 'primary', onClick: function onClick() {
+                      return _this3.handlePurhcase(4);
+                    } },
+                  'Order'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              _Table.TableRow,
+              { style: { backgroundColor: 'rgba(21,100,191,0.05)' } },
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                'KitKat'
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                this.state.KitKat
+              ),
+              _react2.default.createElement(
+                _Table.TableCell,
+                { style: { textAlign: 'center' } },
+                _react2.default.createElement(
+                  _Button2.default,
+                  { variant: 'raised', color: 'primary', onClick: function onClick() {
+                      return _this3.handlePurhcase(5);
+                    } },
+                  'Order'
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Inventory;
+}(_react2.default.Component);
 
 exports.default = Inventory;
 
@@ -36405,42 +36701,79 @@ var NewMission = function (_React$Component) {
     };
 
     _this.handleSavePhone = function (newPhone) {
-      var match = _this.state.missionData.phones.find(function (phone) {
-        return phone.name === newPhone.name;
-      });
+      // Query database to see if there is at least 1 phone with that OS available ***
+      var osIndex = null;
+      switch (newPhone.osVersion) {
+        case 'Android P':
+          osIndex = 0;
+          break;
+        case 'Oreo':
+          osIndex = 1;
+          break;
+        case 'Nougat':
+          osIndex = 2;
+          break;
+        case 'Marshmallow':
+          osIndex = 3;
+          break;
+        case 'Lollipop':
+          osIndex = 4;
+          break;
+        case 'KitKat':
+          osIndex = 5;
+          break;
+      }
 
-      if (match) {
-        var matchedIndex = _this.state.missionData.phones.indexOf(match);
-        _this.state.missionData.phones[matchedIndex] = newPhone;
+      if (_this.state.inventory[osIndex] < 1) {
+        _this.setState({ snackbarText: 'Insufficient ' + newPhone.osVersion + ' stock. Please add more on inventory page or pick another OS.' });
+        setTimeout(function () {
+          return _this.handleSnackbarOpen();
+        }, 1);
       } else {
-        var updatedPhonesArray = _this.state.missionData.phones.concat(newPhone);
+        // Decrement state view of phone inventory (database only updated on mission save)
+        var newInventory = _this.state.inventory;
+        newInventory[osIndex] = _this.state.inventory[osIndex] - 1;
         _this.setState({
-          missionData: _extends({}, _this.state.missionData, { phones: updatedPhonesArray })
+          inventory: newInventory
         });
-      }
 
-      // Add phone to savedPhones array if it's not already there
-      if (_this.state.savedPhones && !_this.state.savedPhones.includes(newPhone.name)) {
-        _this.setState({
-          savedPhones: _this.state.savedPhones.concat(newPhone.name)
+        var match = _this.state.missionData.phones.find(function (phone) {
+          return phone.name === newPhone.name;
         });
-      }
 
-      // Check to see if all phones have been saved
-      if (_this.state.savedPhones && _this.state.savedPhones.length === _this.state.missionData.numPhones) {
-        _this.setState({
-          isReadyToSave: true
-        });
-      } else {
-        _this.setState({
-          isReadyToSave: false
-        });
-      }
+        if (match) {
+          var matchedIndex = _this.state.missionData.phones.indexOf(match);
+          _this.state.missionData.phones[matchedIndex] = newPhone;
+        } else {
+          var updatedPhonesArray = _this.state.missionData.phones.concat(newPhone);
+          _this.setState({
+            missionData: _extends({}, _this.state.missionData, { phones: updatedPhonesArray })
+          });
+        }
 
-      _this.setState({ snackbarText: 'Phone saved.' });
-      setTimeout(function () {
-        return _this.handleSnackbarOpen();
-      }, 1);
+        // Add phone to savedPhones array if it's not already there
+        if (_this.state.savedPhones && !_this.state.savedPhones.includes(newPhone.name)) {
+          _this.setState({
+            savedPhones: _this.state.savedPhones.concat(newPhone.name)
+          });
+        }
+
+        // Check to see if all phones have been saved
+        if (_this.state.savedPhones && _this.state.savedPhones.length === _this.state.missionData.numPhones) {
+          _this.setState({
+            isReadyToSave: true
+          });
+        } else {
+          _this.setState({
+            isReadyToSave: false
+          });
+        }
+
+        _this.setState({ snackbarText: 'Phone saved.' });
+        setTimeout(function () {
+          return _this.handleSnackbarOpen();
+        }, 1);
+      }
     };
 
     _this.handleAddMission = function (event) {
@@ -36461,19 +36794,34 @@ var NewMission = function (_React$Component) {
         return;
       }
 
+      // Call API to add mission to database
       _API2.default.addMission(_this.props.userId, _this.state.missionData).then(function (res) {
         console.log('API response:');
         console.log(res);
 
-        _this.setState({ snackbarText: 'Mission saved! Redirecting...' });
-        setTimeout(function () {
-          return _this.handleSnackbarOpen();
-        }, 1);
+        // If API response is OK, update database with decreased inventory values
+        _API2.default.decreaseInventory(_this.props.userId, _this.state.inventory).then(function (res) {
+          console.log(res);
+          // Alert user that mission was successfully saved
+          _this.setState({ snackbarText: 'Mission saved! Redirecting...' });
+          setTimeout(function () {
+            return _this.handleSnackbarOpen();
+          }, 1);
 
-        setTimeout(function () {
-          this.setState({ redirect: true });
-        }.bind(_this), 2000);
+          // Redirect user to appropriate mission page
+          setTimeout(function () {
+            this.setState({ redirect: true });
+          }.bind(_this), 2000);
+        }).catch(function (err) {
+          // Error handling for decreaseInventory API call
+          _this.setState({ snackbarText: 'There was an error. See console' });
+          setTimeout(function () {
+            return _this.handleSnackbarOpen();
+          }, 1);
+          console.log(err);
+        });
       }).catch(function (err) {
+        // Error handling for addMission API call
         _this.setState({ snackbarText: 'There was an error. See console' });
         setTimeout(function () {
           return _this.handleSnackbarOpen();
@@ -36490,7 +36838,6 @@ var NewMission = function (_React$Component) {
       if (reason === 'clickaway') {
         return;
       }
-
       _this.setState({ snackbarOpen: false });
     };
 
@@ -36509,7 +36856,8 @@ var NewMission = function (_React$Component) {
       savedPhones: [],
       isReadyToSave: false,
       snackbarOpen: false,
-      snackbarText: ''
+      snackbarText: '',
+      inventory: _this.props.user.inventory
     };
 
     _this.handleNameChange = _this.handleNameChange.bind(_this);
@@ -36534,6 +36882,9 @@ var NewMission = function (_React$Component) {
 
 
   // Submit Mission button click handler
+
+
+  // Snackbar open/close handling
 
 
   _createClass(NewMission, [{
@@ -37569,10 +37920,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Card = __webpack_require__(28);
 
-var _Avatar = __webpack_require__(602);
-
-var _Avatar2 = _interopRequireDefault(_Avatar);
-
 var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -38349,8 +38696,7 @@ var reportItems = exports.reportItems = _react2.default.createElement(
     _react2.default.createElement(
       _reactRouterDom.Link,
       { to: '/reports' },
-      _react2.default.createElement(_List.ListItemText, { primary: '\xA0\xA0\xA0\xA0Reports',
-        secondary: '\xA0\xA0\xA0\xA0\xA0Active Missions' })
+      _react2.default.createElement(_List.ListItemText, { primary: '\xA0\xA0\xA0\xA0Reports' })
     )
   ),
   _react2.default.createElement(
@@ -62283,200 +62629,8 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 601 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.styles = undefined;
-
-var _extends2 = __webpack_require__(4);
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _defineProperty2 = __webpack_require__(8);
-
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-var _objectWithoutProperties2 = __webpack_require__(5);
-
-var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _classnames = __webpack_require__(7);
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _withStyles = __webpack_require__(6);
-
-var _withStyles2 = _interopRequireDefault(_withStyles);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var styles = exports.styles = function styles(theme) {
-  return {
-    root: {
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexShrink: 0,
-      width: theme.spacing.unit * 5,
-      height: theme.spacing.unit * 5,
-      fontFamily: theme.typography.fontFamily,
-      fontSize: theme.typography.pxToRem(20),
-      borderRadius: '50%',
-      overflow: 'hidden',
-      userSelect: 'none'
-    },
-    colorDefault: {
-      color: theme.palette.background.default,
-      backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[600]
-    },
-    img: {
-      width: '100%',
-      height: '100%',
-      textAlign: 'center',
-      // Handle non-square image. The property isn't supported by IE11.
-      objectFit: 'cover'
-    }
-  };
-};
-
-function Avatar(props) {
-  var alt = props.alt,
-      childrenProp = props.children,
-      childrenClassNameProp = props.childrenClassName,
-      classes = props.classes,
-      classNameProp = props.className,
-      Component = props.component,
-      imgProps = props.imgProps,
-      sizes = props.sizes,
-      src = props.src,
-      srcSet = props.srcSet,
-      other = (0, _objectWithoutProperties3.default)(props, ['alt', 'children', 'childrenClassName', 'classes', 'className', 'component', 'imgProps', 'sizes', 'src', 'srcSet']);
-
-
-  var className = (0, _classnames2.default)(classes.root, (0, _defineProperty3.default)({}, classes.colorDefault, childrenProp && !src && !srcSet), classNameProp);
-  var children = null;
-
-  if (childrenProp) {
-    if (childrenClassNameProp && typeof childrenProp !== 'string' && _react2.default.isValidElement(childrenProp)) {
-      var childrenClassName = (0, _classnames2.default)(childrenClassNameProp, childrenProp.props.className);
-      children = _react2.default.cloneElement(childrenProp, { className: childrenClassName });
-    } else {
-      children = childrenProp;
-    }
-  } else if (src || srcSet) {
-    children = _react2.default.createElement('img', (0, _extends3.default)({
-      alt: alt,
-      src: src,
-      srcSet: srcSet,
-      sizes: sizes,
-      className: classes.img
-    }, imgProps));
-  }
-
-  return _react2.default.createElement(
-    Component,
-    (0, _extends3.default)({ className: className }, other),
-    children
-  );
-}
-
-Avatar.propTypes = process.env.NODE_ENV !== "production" ? {
-  /**
-   * Used in combination with `src` or `srcSet` to
-   * provide an alt attribute for the rendered `img` element.
-   */
-  alt: _propTypes2.default.string,
-  /**
-   * Used to render icon or text elements inside the Avatar.
-   * `src` and `alt` props will not be used and no `img` will
-   * be rendered by default.
-   *
-   * This can be an element, or just a string.
-   */
-  children: _propTypes2.default.node,
-  /**
-   * @ignore
-   * The className of the child element.
-   * Used by Chip and ListItemIcon to style the Avatar icon.
-   */
-  childrenClassName: _propTypes2.default.string,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes: _propTypes2.default.object.isRequired,
-  /**
-   * @ignore
-   */
-  className: _propTypes2.default.string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a DOM element or a component.
-   */
-  component: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.func]),
-  /**
-   * Properties applied to the `img` element when the component
-   * is used to display an image.
-   */
-  imgProps: _propTypes2.default.object,
-  /**
-   * The `sizes` attribute for the `img` element.
-   */
-  sizes: _propTypes2.default.string,
-  /**
-   * The `src` attribute for the `img` element.
-   */
-  src: _propTypes2.default.string,
-  /**
-   * The `srcSet` attribute for the `img` element.
-   */
-  srcSet: _propTypes2.default.string
-} : {};
-
-Avatar.defaultProps = {
-  component: 'div'
-};
-
-exports.default = (0, _withStyles2.default)(styles, { name: 'MuiAvatar' })(Avatar);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 602 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Avatar = __webpack_require__(601);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_Avatar).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
+/* 601 */,
+/* 602 */,
 /* 603 */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -13,6 +13,21 @@ export default {
     return axios.get(`/api/${userId}`);
   },
 
+  getInventory: function(userId) {
+    axios.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;
+    return axios.get(`/api/inventory/${userId}`);
+  },
+
+  addInventory: function(userId, osIndex) {
+    axios.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;
+    return axios.put(`/api/inventory/${userId}/${osIndex}`);
+  },
+
+  decreaseInventory: function(userId, newInventory) {
+    axios.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;
+    return axios.put(`/api/decrease/${userId}`, {newInventory});
+  },
+
   // Post new mission to database by userID and missionData object
   addMission: function(userId, missionData) {
     axios.defaults.headers.common['Authorization'] = 'bearer ' + localStorage.token;

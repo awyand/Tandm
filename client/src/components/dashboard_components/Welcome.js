@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import Avatar from 'material-ui-next/Avatar';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 

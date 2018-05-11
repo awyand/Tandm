@@ -63,8 +63,7 @@ export const reportItems = (
         </ListItemIcon>
       </Link>
         <Link to='/reports'>
-      <ListItemText primary="&nbsp;&nbsp;&nbsp;&nbsp;Reports"
-                    secondary="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Active Missions"/>
+      <ListItemText primary="&nbsp;&nbsp;&nbsp;&nbsp;Reports" />
       </Link>
     </ListItem>
     <ListItem button>

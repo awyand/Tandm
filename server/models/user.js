@@ -33,6 +33,10 @@ const UserSchema = new mongoose.Schema({
   dateJoined: {
     type: Date,
     default: Date.now()
+  },
+  inventory: {
+    type: Array,
+    default: [50, 50, 50, 50, 50, 50]
   }
 });
 

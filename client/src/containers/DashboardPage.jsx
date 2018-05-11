@@ -24,7 +24,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import Tooltip from 'material-ui-next/Tooltip';
 
-
 const drawerWidth = 240;
 
 const styles = theme => ({

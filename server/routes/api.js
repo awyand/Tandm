@@ -23,7 +23,46 @@ router.get('/:id', (req, res) => {
     // Respond with user's missions array
     res.send({missions: user.missions})
   })
-})
+});
+
+// GET /api/inventory/:id route
+router.get('/inventory/:id', (req, res) => {
+  // Find user by ID in database
+  User.findOne({_id: req.params.id}, (err, user) => {
+    // Respond with Status 500 if an error occurs
+    if (err) {
+      return res.status(500).end();
+    }
+    // Respond with user's inventory object
+    res.send({inventory: user.inventory})
+  })
+});
+
+// PUT /api/inventory/:id/:osIndex route
+router.put('/inventory/:id/:osIndex', (req, res) => {
+
+  const updateString = `inventory.${req.params.osIndex}`;
+
+  User.findOneAndUpdate({_id: req.params.id}, {$inc: {[updateString]: 10}}, {new: true}, (err, inventory) => {
+    if (err) {
+      return res.status(500).end();
+    }
+
+    res.send({inventory});
+
+  })
+});
+
+// PUT /api/inventory/:id route
+router.put('/decrease/:id', (req, res) => {
+  User.findOneAndUpdate({_id: req.params.id}, {$set: {inventory: req.body.newInventory}}, {new: true}, function(err, user) {
+    if (err) {
+      return res.status(500).end();
+    }
+
+    res.send('ok');
+  });
+});
 
 // POST /api/:id route
 router.post('/:id', (req, res) => {
