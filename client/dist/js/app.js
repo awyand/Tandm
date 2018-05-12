@@ -36330,13 +36330,144 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Card = __webpack_require__(29);
 
+var _AddCircleOutline = __webpack_require__(380);
+
+var _AddCircleOutline2 = _interopRequireDefault(_AddCircleOutline);
+
+var _PhonePaused = __webpack_require__(389);
+
+var _PhonePaused2 = _interopRequireDefault(_PhonePaused);
+
+var _PhoneForwarded = __webpack_require__(388);
+
+var _PhoneForwarded2 = _interopRequireDefault(_PhoneForwarded);
+
+var _PieChart = __webpack_require__(390);
+
+var _PieChart2 = _interopRequireDefault(_PieChart);
+
+var _Map = __webpack_require__(386);
+
+var _Map2 = _interopRequireDefault(_Map);
+
+var _Storage = __webpack_require__(391);
+
+var _Storage2 = _interopRequireDefault(_Storage);
+
+var _Email = __webpack_require__(159);
+
+var _Email2 = _interopRequireDefault(_Email);
+
+var _Help = __webpack_require__(385);
+
+var _Help2 = _interopRequireDefault(_Help);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Help = function Help() {
   return _react2.default.createElement(
     _Card.Card,
     { className: 'container' },
-    _react2.default.createElement(_Card.CardTitle, { title: 'Help' })
+    _react2.default.createElement(_Card.CardTitle, { title: 'Help', style: { fontWeight: 'bold' } }),
+    _react2.default.createElement('img', { src: 'images/tandm-logo.png', style: { height: '140px' } }),
+    _react2.default.createElement(
+      _Card.CardText,
+      { style: { textAlign: 'left', padding: '40px' } },
+      _react2.default.createElement(
+        'h2',
+        null,
+        'Dashboard'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Upon logging in, you will be presented with a welcome message and be able to utilize the sidebar on the left. You may log out at any time by using the logout icon in the upper right-hand corner.'
+      ),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement(
+        'h2',
+        null,
+        'Sidebar'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Click the sidebar stack icon in the upper left-hand corner to expand the sidebar, or use the buttons once you\'re familiar with the app.'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'The sidebar contains the following routes:'
+      ),
+      _react2.default.createElement(
+        'ul',
+        null,
+        _react2.default.createElement(
+          'li',
+          null,
+          'New Mission\xA0',
+          _react2.default.createElement(_AddCircleOutline2.default, null)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Saved Missions\xA0',
+          _react2.default.createElement(_PhonePaused2.default, null)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Active Missions\xA0',
+          _react2.default.createElement(_PhoneForwarded2.default, null)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Reports\xA0',
+          _react2.default.createElement(_PieChart2.default, null)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Maps\xA0',
+          _react2.default.createElement(_Map2.default, null)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Inventory\xA0',
+          _react2.default.createElement(_Storage2.default, null)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Contact\xA0',
+          _react2.default.createElement(_Email2.default, null)
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          'Help\xA0',
+          _react2.default.createElement(_Help2.default, null)
+        )
+      ),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement(
+        'h2',
+        null,
+        'New Mission'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'When you click on the New Mission icon, you will be asked to provide a mission name and location, and select the number of phones you want to add to your mission (currently, up to four).'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Once you select the number of phones you\'d like to add, a Phone Roster box will appear with the corresponding number of phones, in red.'
+      )
+    )
   );
 };
 
