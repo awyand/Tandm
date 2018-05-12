@@ -95,7 +95,7 @@ export default class InactiveMissions extends React.Component {
             <TableBody>
               {this.state.missions.filter(mission => mission.active === false).map((mission, i) => {
                 return (
-                  <TableRow key={mission._id} style={{backgroundColor: i % 2 === 0 ? `rgba(21,100,191,0.05)` : 'none'}}>
+                  <TableRow key={mission._id} style={{backgroundColor: i % 2 === 0 ? 'none' : 'rgba(21,100,191,0.05)'}}>
                     <TableCell style={{textAlign: 'center'}}>{mission.name}</TableCell>
                     <TableCell style={{textAlign: 'center'}}>{mission.location}</TableCell>
                     <TableCell style={{textAlign: 'center'}}>{mission.dateAdded}</TableCell>
