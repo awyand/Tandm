@@ -15,7 +15,11 @@ const styles = {
     height: '100px'
   },
   phoneRosterItem: {
-    float: 'left'
+    // float: 'left'
+    display: 'inline-block'
+  },
+  roster: {
+    justifyContent: 'space-evenly'
   }
 }
 
@@ -78,7 +82,10 @@ export default class PhoneRoster extends React.Component {
       )
     }
 
-    return roster
-
+    return (
+      <div style={styles.roster}>
+        {roster}
+      </div>
+    )
   }
 }

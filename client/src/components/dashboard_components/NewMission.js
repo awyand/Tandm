@@ -28,7 +28,7 @@ import CloseIcon from '@material-ui/icons/Close';
 const styles = {
   newMissionContainer: {
     width: '90%',
-    margin: '80px auto 0 auto'
+    margin: '60px auto 0 auto'
   },
   missionInfoAndRosterContainer: {
     width: '40%',
@@ -45,12 +45,12 @@ const styles = {
   },
   phoneRosterCard: {
     width: '100%',
-    marginTop: '30px',
+    marginTop: '10px',
     textAlign: 'center',
     height: '240px'
   },
   phoneConfigContainer: {
-    marginLeft: '45%'
+    marginLeft: '45%',
   },
   phoneCard: {
     width: '100%',

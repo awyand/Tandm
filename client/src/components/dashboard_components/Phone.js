@@ -11,7 +11,7 @@ import Tooltip from 'material-ui-next/Tooltip';
 const styles = {
   svgStyle: {
     enableBackground:'new 0 0 101.001 101.001',
-    margin: '10px auto',
+    margin: '30px auto',
     textAlign: 'center',
     width: '100%'
   },
